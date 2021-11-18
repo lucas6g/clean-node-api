@@ -11,8 +11,9 @@ describe('Signup Controller', () => {
         passwordConfirmation: 'anyPassword'
       }
     }
-    const httpResonse = sut.handle(httpRequest)
+    const httpResponse = sut.handle(httpRequest)
 
-    expect(httpResonse.statusCode).toBe(400)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new Error('Missing param: name'))
   })
 })
