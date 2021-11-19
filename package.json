@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
-    "test:staged": "./node_modules/.bin/jest"
+    "test": "jest",
+    "test:unit": "jest --watch --noStackTrace --silent --runInBand",
+    "test:integration": "jest --watch --noStackTrace --silent --runInBand",
+    "test:staged": "jest --watch --noStackTrace --silent --runInBand --findRelatedTests",
+    "test:ci":"jest --coverage --noStackTrace  --runInBand",
+    "prepare": "husky install"
+   
   },
   "keywords": [],
   "author": "",
