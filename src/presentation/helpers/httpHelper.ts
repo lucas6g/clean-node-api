@@ -13,3 +13,9 @@ export function serverError (): HttpResponse {
     body: new ServerError()
   }
 }
+export function created (data: any): HttpResponse {
+  return {
+    statusCode: 201,
+    body: data
+  }
+}
