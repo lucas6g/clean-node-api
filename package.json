@@ -8,9 +8,8 @@
     "test:unit": "jest --watch --noStackTrace --silent --runInBand --passWithNoTests",
     "test:integration": "jest --watch --noStackTrace --silent --runInBand",
     "test:staged": "jest --watch --noStackTrace --silent --runInBand --findRelatedTests",
-    "test:ci":"jest --coverage --noStackTrace  --runInBand",
+    "test:ci": "jest --coverage --noStackTrace  --runInBand",
     "prepare": "husky install"
-   
   },
   "keywords": [],
   "author": "",
@@ -18,6 +17,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.7",
+    "@types/validator": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "eslint": "^7.12.1",
     "eslint-config-standard-with-typescript": "^21.0.1",
@@ -30,5 +30,8 @@
     "lint-staged": "^12.0.2",
     "ts-jest": "^27.0.7",
     "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "validator": "^13.7.0"
   }
 }
