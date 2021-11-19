@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:unit": "jest --watch --noStackTrace --silent --runInBand",
+    "test": "jest ",
+    "test:unit": "jest --watch --noStackTrace --silent --runInBand --passWithNoTests",
     "test:integration": "jest --watch --noStackTrace --silent --runInBand",
     "test:staged": "jest --watch --noStackTrace --silent --runInBand --findRelatedTests",
     "test:ci":"jest --coverage --noStackTrace  --runInBand",
