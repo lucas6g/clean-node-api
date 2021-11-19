@@ -1,11 +1,11 @@
 
-import { Account } from '../../domain/entities/Account'
-import { AddAccount, AddAccountModel } from '../../domain/usecases/AddAccount'
-import { SignupController } from '../controllers/SignupController'
-import { InvalidParamError } from '../errors/InvalidEmailError'
-import { MissingParamError } from '../errors/MissingParamError'
-import { ServerError } from '../errors/ServerError'
-import { EmailValidator } from '../protocols/EmailValidator'
+import { Account } from '../../../domain/entities/Account'
+import { AddAccount, AddAccountModel } from '../../../domain/usecases/AddAccount'
+import { SignupController } from './SignupController'
+import { InvalidParamError } from '../../errors/InvalidEmailError'
+import { MissingParamError } from '../../errors/MissingParamError'
+import { ServerError } from '../../errors/ServerError'
+import { EmailValidator } from './protocols/EmailValidator'
 
 const makeEmailValidator = (): EmailValidator => {
   // dependencia mockada
