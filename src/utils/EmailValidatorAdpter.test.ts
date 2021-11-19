@@ -1,6 +1,7 @@
 import { EmailValidatorAdpter } from './EmailValidatorAdpter'
 import validator from 'validator'
 
+// classe mocada pelo jest
 jest.mock('validator', () => {
   return {
     isEmail (): boolean {
@@ -22,5 +23,12 @@ describe('EmailValidatorAdpter', () => {
     const isValid = sut.isValid('validEmail@mail.com')
 
     expect(isValid).toBe(true)
+  })
+  test('should call validator whith correct email', () => {
+    const sut = new EmailValidatorAdpter()
+    const isEmailSpy = jest.spyOn(validator, 'isEmail')
+    sut.isValid('anyEmail@mail.com')
+
+    expect(isEmailSpy).toHaveBeenCalledWith('anyEmail@mail.com')
   })
 })
