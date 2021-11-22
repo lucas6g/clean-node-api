@@ -12,11 +12,15 @@
     "test:integration": "jest --watch --noStackTrace --silent --runInBand",
     "test:staged": "jest --watch --noStackTrace --silent --runInBand --findRelatedTests",
     "test:ci": "jest --coverage --noStackTrace  --runInBand",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev":"ts-node-dev --transpile-only --ignore-watch node_modules src/main/server.ts"
+
+
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.1.0",
     "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
     "@types/jest": "^27.0.2",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^16.11.7",
@@ -32,10 +36,12 @@
     "jest": "^27.3.1",
     "lint-staged": "^12.0.2",
     "ts-jest": "^27.0.7",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.4"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
     "mongodb": "^4.2.0",
     "validator": "^13.7.0"
   }
