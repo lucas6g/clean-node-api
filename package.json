@@ -7,9 +7,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "jest --clearCache",
+    "test": "jest",
     "test:unit": "jest --watch --noStackTrace --silent  --passWithNoTests -c jest-unit-config.js",
-    "test:integration": "jest  --watch --noStackTrace --silent --runInBand -c jest-integration-config.js ",
+    "test:integration": "jest  --watch  --runInBand -c jest-integration-config.js ",
     "test:staged": "jest --watch --noStackTrace --silent --runInBand --findRelatedTests",
     "test:ci": "jest --coverage --noStackTrace  --runInBand",
     "prepare": "husky install",

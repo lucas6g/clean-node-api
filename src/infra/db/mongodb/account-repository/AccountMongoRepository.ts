@@ -9,8 +9,10 @@ export class AccountMongoRepository implements AddAccountRepository {
 
     const result = await accountCollection.insertOne(accountData)
 
+    const insertedId = String(result.insertedId)
+
     const account = {
-      id: String(result.insertedId),
+      id: insertedId,
       ...accountData
     }
 
