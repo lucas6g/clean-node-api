@@ -18,7 +18,7 @@ module.exports = {
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/main/**'],
 
   roots: ['<rootDir>/src'],
 
