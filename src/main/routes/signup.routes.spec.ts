@@ -23,7 +23,6 @@ describe('SignUp Routes', () => {
       password: '123',
       passwordConfirmation: '123'
     })
-    console.log(response.body)
 
     expect(response.status).toBe(201)
   })
