@@ -51,22 +51,24 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const makeFakeHttpRequest = (): HttpRequest => {
+  return {
+    body: {
+      name: 'anyName',
+      email: 'anyEmail@mail.com',
+      password: 'anyPassword',
+      passwordConfirmation: 'anyPassword'
+
+    }
+  }
+}
+
 // integracao do decorator com o controller
 
 describe('LogController Decorator', () => {
   test('should call controller handle', async () => {
     const { sut, controllerStub } = makeSut()
-    const httpRequest = {
-
-      body: {
-        name: 'anyName',
-        email: 'anyEmail@mail.com',
-        password: 'anyPassword',
-        passwordConfirmation: 'anyPassword'
-
-      }
-
-    }
+    const httpRequest = makeFakeHttpRequest()
 
     const handleSpy = jest.spyOn(controllerStub, 'handle')
 
@@ -76,17 +78,7 @@ describe('LogController Decorator', () => {
   })
   test('should return  the same result of the controller', async () => {
     const { sut } = makeSut()
-    const httpRequest = {
-
-      body: {
-        name: 'anyName',
-        email: 'anyEmail@mail.com',
-        password: 'anyPassword',
-        passwordConfirmation: 'anyPassword'
-
-      }
-
-    }
+    const httpRequest = makeFakeHttpRequest()
 
     const httpResponse = await sut.handle(httpRequest)
 
@@ -103,20 +95,12 @@ describe('LogController Decorator', () => {
     fakeError.stack = 'anyStack'
     const error = serverError(fakeError)
 
+    // metodo handle retorna um erro
     jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(Promise.resolve(error))
+
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'save').mockReturnValueOnce(Promise.resolve())
 
-    const httpRequest = {
-
-      body: {
-        name: 'anyName',
-        email: 'anyEmail@mail.com',
-        password: 'anyPassword',
-        passwordConfirmation: 'anyPassword'
-
-      }
-
-    }
+    const httpRequest = makeFakeHttpRequest()
 
     await sut.handle(httpRequest)
     expect(logSpy).toHaveBeenCalledWith('anyStack')
