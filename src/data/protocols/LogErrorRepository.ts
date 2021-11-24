@@ -1,5 +1,5 @@
 export interface LogErrorRepository {
 
-  save: (satak: string) => Promise<void>
+  save: (stack: string) => Promise<void>
 
 }
