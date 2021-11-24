@@ -50,6 +50,9 @@ const makeSut = (): SutTypes => {
 
   }
 }
+
+// integracao do decorator com o controller
+
 describe('LogController Decorator', () => {
   test('should call controller handle', async () => {
     const { sut, controllerStub } = makeSut()
