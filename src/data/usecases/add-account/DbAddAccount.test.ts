@@ -53,7 +53,7 @@ const makeSut = (): SutTypes => {
 const makeFakeAccountData = (): AddAccountModel => {
   return {
     name: 'anyName',
-    email: 'anyEmail@gmail.com',
+    email: 'anyEmail@mail.com',
     password: 'anyPassword'
 
   }
