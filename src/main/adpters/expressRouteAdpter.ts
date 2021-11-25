@@ -9,6 +9,12 @@ export const adpteRoute = (controller: Controller) => {
     }
     const httpResponse = await controller.handle(httpRequest)
 
-    return res.status(httpResponse.statusCode).json(httpResponse.body)
+    if (httpResponse.statusCode === 201) {
+      return res.status(httpResponse.statusCode).json(httpResponse.body)
+    } else {
+      return res.status(httpResponse.statusCode).json({
+        error: httpResponse.body.message
+      })
+    }
   }
 }
