@@ -8,6 +8,7 @@ import { HttpRequest } from '../../protocols/Http'
 import { EmailValidator } from '../SignupController/protocols/EmailValidator'
 
 import { LoginController } from './LoginController'
+import { ServerError } from '../../errors/ServerError'
 
 const makeEmailValidator = (): EmailValidator => {
   // dependencia mockada
@@ -130,5 +131,19 @@ describe('Login Controller', () => {
 
     expect(httpResponse.statusCode).toBe(401)
     expect(httpResponse.body).toEqual(new UnauthorizedError())
+  })
+  test('should return 500 Authentication trows error', async () => {
+    const { sut, authenticationStub } = makeSut()
+
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(async () => {
+      throw new Error()
+    })
+
+    const httpRequest = makeFakeHttpRequest()
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError(httpResponse.body.stack))
   })
 })
