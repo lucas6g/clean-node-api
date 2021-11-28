@@ -1,6 +1,7 @@
+import { Authentication } from '../../../domain/usecases/Authentication'
 import { InvalidParamError } from '../../errors/InvalidEmailError'
 import { MissingParamError } from '../../errors/MissingParamError'
-import { ServerError } from '../../errors/ServerError'
+
 import { HttpRequest } from '../../protocols/Http'
 
 import { EmailValidator } from '../SignupController/protocols/EmailValidator'
@@ -16,6 +17,15 @@ const makeEmailValidator = (): EmailValidator => {
   }
   return new EmailValidatorStub()
 }
+const makeAuthenticationStub = (): Authentication => {
+  // dependencia mockada
+  class AuthenticationStub implements Authentication {
+    async auth (email: string, password: string): Promise<string> {
+      return await Promise.resolve('anyToken')
+    }
+  }
+  return new AuthenticationStub()
+}
 
 const makeFakeHttpRequest = (): HttpRequest => {
   return {
@@ -30,14 +40,17 @@ const makeFakeHttpRequest = (): HttpRequest => {
 interface SutTypes {
   sut: LoginController
   emailValidatorStub: EmailValidator
+  authenticationStub: Authentication
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
-  const sut = new LoginController(emailValidatorStub)
+  const authenticationStub = makeAuthenticationStub()
+  const sut = new LoginController(emailValidatorStub, authenticationStub)
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    authenticationStub
 
   }
 }
@@ -94,17 +107,15 @@ describe('Login Controller', () => {
 
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
-  test('should return 500 if EmailValidator trows error', async () => {
-    const { sut, emailValidatorStub } = makeSut()
+  test('should call authentication whit correct values ', async () => {
+    const { sut, authenticationStub } = makeSut()
 
-    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
-      throw new Error()
-    })
+    const authSpy = jest.spyOn(authenticationStub, 'auth')
 
     const httpRequest = makeFakeHttpRequest()
 
-    const httpResponse = await sut.handle(httpRequest)
+    await sut.handle(httpRequest)
 
-    expect(httpResponse.body).toEqual(new ServerError(httpResponse.body.stack))
+    expect(authSpy).toHaveBeenCalledWith('anyEmail@mail.com', 'anyPassword')
   })
 })
