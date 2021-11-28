@@ -3,7 +3,7 @@ import { Authentication } from '../../../domain/usecases/Authentication'
 
 import { InvalidParamError } from '../../errors/InvalidEmailError'
 import { MissingParamError } from '../../errors/MissingParamError'
-import { badRequest, serverError, unauthorized } from '../../helpers/httpHelper'
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/httpHelper'
 import { Controller } from '../../protocols/Controller'
 import { HttpRequest, HttpResponse } from '../../protocols/Http'
 import { EmailValidator } from '../SignupController/protocols/EmailValidator'
@@ -38,7 +38,7 @@ export class LoginController implements Controller {
         return unauthorized()
       }
 
-      return await Promise.resolve({ body: {}, statusCode: 200 })
+      return ok(token)
     } catch (error) {
       return serverError(error)
     }

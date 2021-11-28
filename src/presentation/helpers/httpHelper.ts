@@ -26,3 +26,9 @@ export function created (data: any): HttpResponse {
     body: data
   }
 }
+export function ok (data: any): HttpResponse {
+  return {
+    statusCode: 200,
+    body: data
+  }
+}
