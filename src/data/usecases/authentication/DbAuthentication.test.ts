@@ -40,7 +40,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Db Authentication', () => {
-    test('should call LoadAccountByEmail repository whit correct email', async () => {
+    test('should call LoadAccountByEmailRepository whit correct email', async () => {
         const { sut, loadAccountRepositoryStub } = makeSut()
 
         const getByEmailSpy = jest.spyOn(loadAccountRepositoryStub, 'getByEmail')
@@ -48,5 +48,16 @@ describe('Db Authentication', () => {
         await sut.auth('anyEmail@mail.com', 'anyPassword')
 
         expect(getByEmailSpy).toHaveBeenCalledWith('anyEmail@mail.com')
+    })
+    test('should trows an error if LoadAccountByEmailRepository trows an error', async () => {
+        const { sut, loadAccountRepositoryStub } = makeSut()
+
+        jest.spyOn(loadAccountRepositoryStub, 'getByEmail').mockImplementationOnce(async () => {
+            throw Error()
+        })
+
+        await expect(
+            sut.auth('anyEmail@mail.com', 'anyPassword')
+        ).rejects.toBeInstanceOf(Error)
     })
 })
