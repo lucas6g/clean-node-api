@@ -6,20 +6,18 @@ import { SignupController } from '../../presentation/controllers/SignupControlle
 
 import { Controller } from '../../presentation/protocols/Controller'
 
-import { EmailValidatorAdpter } from '../../utils/EmailValidatorAdpter'
 import { LogControllerDecorator } from '../decorators/LogDecorator'
 import { makeSignupValidation } from './signupValidation'
 
 // padra de projeto factory
 export const makeSignupController = (): Controller => {
-  const emailValidatorAdpter = new EmailValidatorAdpter()
   const salt = 12
   const accountMongoRepository = new AccountMongoRepository()
   const bcryptAdpter = new BcryptAdpter(salt)
   const dbAddAccount = new DbAddAccount(bcryptAdpter, accountMongoRepository)
 
   const logMongoRepository = new LogMongoRepository()
-  const signUpController = new SignupController(emailValidatorAdpter, dbAddAccount, makeSignupValidation())
+  const signUpController = new SignupController(dbAddAccount, makeSignupValidation())
 
   return new LogControllerDecorator(signUpController, logMongoRepository)
 }
