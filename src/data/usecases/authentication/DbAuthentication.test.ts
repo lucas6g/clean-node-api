@@ -134,15 +134,11 @@ describe('Db Authentication', () => {
 
         expect(genetateSpy).toHaveBeenCalledWith('anyId')
     })
-    test('should trows an error if TokenGenerator trows an error', async () => {
-        const { sut, tokenGeneratorStub } = makeSut()
+    test('should DbAuthentication returns a token on succsses', async () => {
+        const { sut } = makeSut()
 
-        jest.spyOn(tokenGeneratorStub, 'generate').mockImplementationOnce(async () => {
-            throw Error()
-        })
+        const token = await sut.auth('anyEmail@mail.com', 'anyPassword')
 
-        await expect(
-            sut.auth('anyEmail@mail.com', 'anyPassword')
-        ).rejects.toBeInstanceOf(Error)
+        expect(token).toBe('anyToken')
     })
 })
