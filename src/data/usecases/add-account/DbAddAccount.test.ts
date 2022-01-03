@@ -1,13 +1,13 @@
 import { AddAccount, AddAccountModel } from '../../../domain/usecases/AddAccount'
 import { DbAddAccount } from './DbAddAccount'
-import { Encrypter } from '../../protocols/Encrypter'
+import { Encrypter } from '../../protocols/cryptography/Encrypter'
 import { AddAccountRepository } from './AddAccountRepository'
 import { Account } from '../../../domain/entities/Account'
 
 const makeEncrypterStub = (): Encrypter => {
   // dependencia mockada
   class EncrypterStub implements Encrypter {
-    async encrypt (value: string): Promise<string> {
+    async encrypt(value: string): Promise<string> {
       return await new Promise(resolve => resolve('hashedPassword'))
     }
   }
@@ -16,7 +16,7 @@ const makeEncrypterStub = (): Encrypter => {
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   // dependencia mockada
   class AddAccountRepositoryStub implements AddAccountRepository {
-    async save (account: AddAccountModel): Promise<Account> {
+    async save(account: AddAccountModel): Promise<Account> {
       const fakeAccount = {
         id: 'anyId',
         name: 'anyName',
