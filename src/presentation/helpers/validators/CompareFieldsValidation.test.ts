@@ -13,7 +13,7 @@ describe('Compare Fields Validation', () => {
     test('should return null if validation succeeded', () => {
         const sut = new CompareFieldsValidation('field', 'fieldToCompare')
 
-        const validationReturn = sut.validate({ field: 'anyValue', fieldToCompare: 'invalidValue' })
+        const validationReturn = sut.validate({ field: 'anyValue', fieldToCompare: 'anyValue' })
 
         expect(validationReturn).toBeFalsy()
     })
