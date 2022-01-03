@@ -2,7 +2,7 @@
 import { Authentication } from '../../../domain/usecases/Authentication'
 
 import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/httpHelper'
-import { Validation } from '../../helpers/validators/Validation'
+import { Validation } from '../../protocols/Validation'
 import { Controller } from '../../protocols/Controller'
 import { HttpRequest, HttpResponse } from '../../protocols/Http'
 

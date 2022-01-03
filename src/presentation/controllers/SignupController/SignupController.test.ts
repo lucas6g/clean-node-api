@@ -6,7 +6,7 @@ import { SignupController } from './SignupController'
 import { ServerError } from '../../errors/ServerError'
 
 import { HttpRequest } from '../../protocols/Http'
-import { Validation } from '../../helpers/validators/Validation'
+import { Validation } from '../../protocols/Validation'
 
 const makeValidationStub = (): Validation => {
   // dependencia mockada
