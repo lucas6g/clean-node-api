@@ -1,3 +1,4 @@
+import { CompareFieldsValidation } from '../../presentation/helpers/validators/CompareFieldsValidation'
 import { RequeiredFieldValidation } from '../../presentation/helpers/validators/RequiredFieldValidation'
 import { ValidationComposite } from '../../presentation/helpers/validators/ValidationComposite'
 import { makeSignupValidation } from './signupValidation'
@@ -12,7 +13,8 @@ describe('SignUpValidation Factory', () => {
             new RequeiredFieldValidation('name'),
             new RequeiredFieldValidation('email'),
             new RequeiredFieldValidation('password'),
-            new RequeiredFieldValidation('passwordConfirmation')
+            new RequeiredFieldValidation('passwordConfirmation'),
+            new CompareFieldsValidation('password', 'passwordConfirmation')
 
         ])
     })

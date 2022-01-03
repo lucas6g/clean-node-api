@@ -12,7 +12,7 @@ import { Validation } from '../../helpers/validators/Validation'
 const makeEmailValidator = (): EmailValidator => {
   // dependencia mockada
   class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
+    isValid(email: string): boolean {
       return true
     }
   }
@@ -21,7 +21,7 @@ const makeEmailValidator = (): EmailValidator => {
 const makeValidationStub = (): Validation => {
   // dependencia mockada
   class ValidationStub implements Validation {
-    validate (input: any): Error | null {
+    validate(input: any): Error | null {
       return null
     }
   }
@@ -31,7 +31,7 @@ const makeValidationStub = (): Validation => {
 const makeAddAccount = (): AddAccount => {
   // dependencia mockada
   class AddAccountStub implements AddAccount {
-    async add (account: AddAccountModel): Promise<Account> {
+    async add(account: AddAccountModel): Promise<Account> {
       const fakeAccount = {
         id: 'validId',
         name: 'validName',
@@ -90,24 +90,7 @@ describe('Signup Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
-  test('should return 400 if invalid password confirmation fails', async () => {
-    const { sut } = makeSut()
 
-    const httpRequest = {
-      body: {
-        name: 'anyName',
-        email: 'invalidEmail',
-        password: 'anyPassword',
-        passwordConfirmation: 'invaliPassword'
-
-      }
-    }
-
-    const httpResponse = await sut.handle(httpRequest)
-
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
-  })
   test('should call EmailValidator whit correct email', async () => {
     const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
