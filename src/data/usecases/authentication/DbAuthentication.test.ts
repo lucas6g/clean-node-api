@@ -92,4 +92,24 @@ describe('Db Authentication', () => {
 
         expect(compareSpy).toHaveBeenCalledWith('anyPassword', 'hashedPassword')
     })
+    test('should trows an error if HashCompare trows an error', async () => {
+        const { sut, hashComparerStub } = makeSut()
+
+        jest.spyOn(hashComparerStub, 'compare').mockImplementationOnce(async () => {
+            throw Error()
+        })
+
+        await expect(
+            sut.auth('anyEmail@mail.com', 'anyPassword')
+        ).rejects.toBeInstanceOf(Error)
+    })
+    test('should return null  if HashCompare retuns false', async () => {
+        const { sut, hashComparerStub } = makeSut()
+
+        jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(Promise.resolve(false))
+
+        const token = await sut.auth('anyEmail@mail.com', 'anyPassword')
+
+        expect(token).toBeNull()
+    })
 })
