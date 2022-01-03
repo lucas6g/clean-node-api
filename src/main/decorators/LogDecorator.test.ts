@@ -1,13 +1,13 @@
 
 import { LogErrorRepository } from '../../data/protocols/LogErrorRepository'
-import { serverError } from '../../presentation/helpers/httpHelper'
+import { serverError } from '../../presentation/helpers/http/httpHelper'
 import { Controller } from '../../presentation/protocols/Controller'
 import { HttpRequest, HttpResponse } from '../../presentation/protocols/Http'
 import { LogControllerDecorator } from './LogDecorator'
 
 const makeControllerStub = (): Controller => {
   class ControllerStub implements Controller {
-    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
       const httpResponse = {
         statusCode: 200,
         body: {
@@ -23,7 +23,7 @@ const makeControllerStub = (): Controller => {
 
 const makeLogErrorRepository = (): LogErrorRepository => {
   class LogErrorRepositoryStub implements LogErrorRepository {
-    async save (stack: string): Promise<void> {
+    async save(stack: string): Promise<void> {
       return await Promise.resolve()
     }
   }
