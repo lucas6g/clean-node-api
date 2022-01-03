@@ -60,4 +60,13 @@ describe('Db Authentication', () => {
             sut.auth('anyEmail@mail.com', 'anyPassword')
         ).rejects.toBeInstanceOf(Error)
     })
+    test('should return null if LoadAccountByEmailRepository returs null ', async () => {
+        const { sut, loadAccountRepositoryStub } = makeSut()
+
+        jest.spyOn(loadAccountRepositoryStub, 'getByEmail').mockReturnValueOnce(Promise.resolve(null))
+
+        const token = await sut.auth('anyEmail@mail.com', 'anyPassword')
+
+        expect(token).toBeNull()
+    })
 })
