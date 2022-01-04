@@ -25,4 +25,13 @@ describe('JwtAdpter', () => {
 
         expect(token).toBe('anyToken')
     })
+    test('should trows an error when sign trows an error', async () => {
+        const sut = new JwtAdpter('secret')
+
+        jest.spyOn(jwt, 'sign').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        await expect(sut.generate('anyValue')).rejects.toBeInstanceOf(Error)
+    })
 })
