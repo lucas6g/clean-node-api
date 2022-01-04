@@ -1,22 +1,22 @@
 
 import { Account } from '../../../domain/entities/Account'
 import { AddAccount, AddAccountModel } from '../../../domain/usecases/AddAccount'
-import { Encrypter } from '../../protocols/cryptography/Encrypter'
+import { Hasher } from '../../protocols/cryptography/Hasher'
 import { AddAccountRepository } from './AddAccountRepository'
 
 export class DbAddAccount implements AddAccount {
-  private readonly encrypter: Encrypter
+  private readonly hasher: Hasher
   private readonly addAccountRepository: AddAccountRepository
 
-  constructor(encrypter: Encrypter, addAccountRepository: AddAccountRepository) {
-    this.encrypter = encrypter
+  constructor(hasher: Hasher, addAccountRepository: AddAccountRepository) {
+    this.hasher = hasher
     this.addAccountRepository = addAccountRepository
   }
 
   async add(accountData: AddAccountModel): Promise<Account> {
-    const encryptedPassword = await this.encrypter.encrypt(accountData.password)
+    const hasherPassword = await this.hasher.hash(accountData.password)
 
-    const account = await this.addAccountRepository.save(Object.assign({}, accountData, { password: encryptedPassword }))
+    const account = await this.addAccountRepository.save(Object.assign({}, accountData, { password: hasherPassword }))
 
     return account
   }
