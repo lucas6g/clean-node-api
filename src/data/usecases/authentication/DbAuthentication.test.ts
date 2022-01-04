@@ -163,4 +163,16 @@ describe('Db Authentication', () => {
 
         expect(updateSpy).toHaveBeenCalledWith('anyId', 'anyToken')
     })
+
+    test('should trows an error if UpdateTokenRepository trows an error', async () => {
+        const { sut, updateTokenRepositoryStub } = makeSut()
+
+        jest.spyOn(updateTokenRepositoryStub, 'update').mockImplementationOnce(async () => {
+            throw Error()
+        })
+
+        await expect(
+            sut.auth('anyEmail@mail.com', 'anyPassword')
+        ).rejects.toBeInstanceOf(Error)
+    })
 })
