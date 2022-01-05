@@ -1,11 +1,12 @@
-import { WithId } from 'mongodb'
+import { WithId, ObjectId } from 'mongodb'
+import { UpdateTokenRepository } from '../../../../data/protocols/db/UpdateTokenRepository'
 import { AddAccountRepository } from '../../../../data/usecases/add-account/AddAccountRepository'
 import { LoadAccountByEmailRepository } from '../../../../data/usecases/authentication/LoadAccountByEmailRepository'
 import { Account } from '../../../../domain/entities/Account'
 import { AddAccountModel } from '../../../../domain/usecases/AddAccount'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateTokenRepository {
   async save(accountData: AddAccountModel): Promise<Account> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
@@ -38,5 +39,15 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     }
 
     return account
+  }
+
+  async updateToken(id: string, token: string): Promise<void> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+    await accountCollection.updateOne({ _id: new ObjectId(id) }, {
+      $set: {
+        // eslint-disable-next-line quote-props
+        token
+      }
+    })
   }
 }
