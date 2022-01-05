@@ -47,12 +47,19 @@ describe('Login Routes', () => {
     })
   })
   describe('POST /login', () => {
-    test('should return 200  on login', async () => {
+    test('should return 200 on login', async () => {
       const response = await request(app).post('/login').send({
         email: 'lucas@gmail.com',
         password: '123'
       })
       expect(response.status).toBe(200)
+    })
+    test('should return 401 on login fails', async () => {
+      const response = await request(app).post('/login').send({
+        email: 'wrongEmail@gmail.com',
+        password: 'invalidPassword'
+      })
+      expect(response.status).toBe(401)
     })
   })
 })
