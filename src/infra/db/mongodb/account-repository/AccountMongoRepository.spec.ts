@@ -57,4 +57,11 @@ describe('Account Mongo Repository', () => {
     expect(account?.email).toBe('anyMail@mail.com')
     expect(account?.password).toBe('anyPassword')
   })
+  test('should return null on getByEmail fails', async () => {
+    const sut = makeSut()
+
+    const account = await sut.getByEmail('invalidMail@mail.com')
+
+    expect(account).toBeNull()
+  })
 })
