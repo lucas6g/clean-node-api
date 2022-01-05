@@ -33,7 +33,7 @@ export class DbAuthentication implements Authentication {
         }
         const token = await this.tokenGenerator.generate(account.id)
 
-        await this.updatedTokenRepository.update(account.id, token)
+        await this.updatedTokenRepository.updateToken(account.id, token)
 
         return token
     }

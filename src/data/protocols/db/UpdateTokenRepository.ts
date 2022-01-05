@@ -1,4 +1,4 @@
 export interface UpdateTokenRepository {
 
-    update: (id: string, token: string) => Promise<void>
+    updateToken: (id: string, token: string) => Promise<void>
 }

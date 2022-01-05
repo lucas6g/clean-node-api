@@ -27,7 +27,7 @@ const makeLoadAccoutRepositoryStub = (): LoadAccountByEmailRepository => {
 const makeUpdateTokenRepositoryStub = (): UpdateTokenRepository => {
     // dependencia mockada
     class UpdateTokenRepositoryStub implements UpdateTokenRepository {
-        async update(id: string, token: string): Promise<void> {
+        async updateToken(id: string, token: string): Promise<void> {
 
         }
     }
@@ -157,7 +157,7 @@ describe('Db Authentication', () => {
     test('should calls UpdateTokenRepository whit correct values', async () => {
         const { sut, updateTokenRepositoryStub } = makeSut()
 
-        const updateSpy = jest.spyOn(updateTokenRepositoryStub, 'update')
+        const updateSpy = jest.spyOn(updateTokenRepositoryStub, 'updateToken')
 
         await sut.auth('anyEmail@mail.com', 'anyPassword')
 
@@ -167,7 +167,7 @@ describe('Db Authentication', () => {
     test('should trows an error if UpdateTokenRepository trows an error', async () => {
         const { sut, updateTokenRepositoryStub } = makeSut()
 
-        jest.spyOn(updateTokenRepositoryStub, 'update').mockImplementationOnce(async () => {
+        jest.spyOn(updateTokenRepositoryStub, 'updateToken').mockImplementationOnce(async () => {
             throw Error()
         })
 
