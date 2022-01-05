@@ -1,5 +1,5 @@
 import { WithId, ObjectId } from 'mongodb'
-import { UpdateTokenRepository } from '../../../../data/protocols/db/UpdateTokenRepository'
+import { UpdateTokenRepository } from '../../../../data/protocols/db/account/UpdateTokenRepository'
 import { AddAccountRepository } from '../../../../data/usecases/add-account/AddAccountRepository'
 import { LoadAccountByEmailRepository } from '../../../../data/usecases/authentication/LoadAccountByEmailRepository'
 import { Account } from '../../../../domain/entities/Account'

@@ -1,7 +1,7 @@
 import { Account } from '../../../domain/entities/Account'
 import { HashComparer } from '../../protocols/cryptography/HashComparer'
 import { TokenGenerator } from '../../protocols/cryptography/TokenGenerator'
-import { UpdateTokenRepository } from '../../protocols/db/UpdateTokenRepository'
+import { UpdateTokenRepository } from '../../protocols/db/account/UpdateTokenRepository'
 import { DbAuthentication } from './DbAuthentication'
 import { LoadAccountByEmailRepository } from './LoadAccountByEmailRepository'
 

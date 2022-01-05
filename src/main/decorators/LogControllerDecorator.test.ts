@@ -1,9 +1,9 @@
 
-import { LogErrorRepository } from '../../data/protocols/db/LogErrorRepository'
+import { LogErrorRepository } from '../../data/protocols/db/log/LogErrorRepository'
 import { serverError } from '../../presentation/helpers/http/httpHelper'
 import { Controller } from '../../presentation/protocols/Controller'
 import { HttpRequest, HttpResponse } from '../../presentation/protocols/Http'
-import { LogControllerDecorator } from './LogDecorator'
+import { LogControllerDecorator } from './LogControllerDecorator'
 
 const makeControllerStub = (): Controller => {
   class ControllerStub implements Controller {

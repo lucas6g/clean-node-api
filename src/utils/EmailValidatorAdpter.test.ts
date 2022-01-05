@@ -1,11 +1,11 @@
 import { EmailValidatorAdpter } from './EmailValidatorAdpter'
 import validator from 'validator'
-import { EmailValidator } from '../presentation/controllers/SignupController/protocols/EmailValidator'
+import { EmailValidator } from '../presentation/protocols/EmailValidator'
 
 // dependencia externa mocada pelo jest
 jest.mock('validator', () => {
   return {
-    isEmail (): boolean {
+    isEmail(): boolean {
       return true
     }
   }

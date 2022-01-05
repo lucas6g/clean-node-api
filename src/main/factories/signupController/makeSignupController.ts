@@ -1,13 +1,13 @@
 import { DbAddAccount } from '../../../data/usecases/add-account/DbAddAccount'
 import { BcryptAdpter } from '../../../infra/cryptography/bcrypt-adpter/BcryptAdpter'
-import { AccountMongoRepository } from '../../../infra/db/mongodb/account-repository/AccountMongoRepository'
-import { LogMongoRepository } from '../../../infra/db/mongodb/log-repository/LogMongoRepository'
+import { AccountMongoRepository } from '../../../infra/db/mongodb/account/AccountMongoRepository'
+import { LogMongoRepository } from '../../../infra/db/mongodb/log/LogMongoRepository'
 import { SignupController } from '../../../presentation/controllers/SignupController/SignupController'
 
 import { Controller } from '../../../presentation/protocols/Controller'
 
-import { LogControllerDecorator } from '../../decorators/LogDecorator'
-import { makeSignupValidation } from './signupValidation'
+import { LogControllerDecorator } from '../../decorators/LogControllerDecorator'
+import { makeSignupValidation } from './makeSignupValidation'
 
 // padra de projeto factory
 export const makeSignupController = (): Controller => {

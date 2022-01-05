@@ -1,7 +1,7 @@
 
 import { EmailValidation } from '../validators/EmailValidation'
 
-import { EmailValidator } from '../../controllers/SignupController/protocols/EmailValidator'
+import { EmailValidator } from '../../protocols/EmailValidator'
 import { InvalidParamError } from '../../errors/InvalidEmailError'
 
 const makeEmailValidator = (): EmailValidator => {
