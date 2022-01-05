@@ -1,10 +1,12 @@
-import { Collection } from 'mongodb'
+import { Collection, InsertOneResult } from 'mongodb'
+import { Account } from '../../../../domain/entities/Account'
 
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './AccountMongoRepository'
 
 describe('Account Mongo Repository', () => {
   let accountCollection: Collection
+  let insertResult: InsertOneResult<Account>
 
   beforeAll(async () => {
     await MongoHelper.connect(String(process.env.MONGO_URL))
@@ -16,7 +18,9 @@ describe('Account Mongo Repository', () => {
 
   beforeEach(async () => {
     accountCollection = await MongoHelper.getCollection('accounts')
-    await accountCollection.insertOne({
+
+    insertResult = await accountCollection.insertOne({
+
       name: 'anyName',
       email: 'anyMail@mail.com',
       password: 'anyPassword'
@@ -63,5 +67,14 @@ describe('Account Mongo Repository', () => {
     const account = await sut.getByEmail('invalidMail@mail.com')
 
     expect(account).toBeNull()
+  })
+  test('should  update account token when calls updateToken', async () => {
+    const sut = makeSut()
+
+    await sut.updateToken(insertResult.insertedId.toString(), 'anyToken')
+
+    const account = await accountCollection.findOne({ _id: insertResult.insertedId })
+
+    expect(account?.token).toBe('anyToken')
   })
 })
