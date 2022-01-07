@@ -3,7 +3,8 @@ import { AddAccount } from '../../../domain/usecases/AddAccount'
 import { badRequest, created, serverError } from '../../helpers/http/httpHelper'
 import { Controller } from '../../protocols/Controller'
 
-import { HttpRequest, HttpResponse } from '../../protocols/Http'
+import { HttpRequest } from '../../protocols/HttpRequest'
+import { HttpResponse } from '../../protocols/HttpResponse'
 import { Validation } from '../../protocols/Validation'
 
 export class SignupController implements Controller {

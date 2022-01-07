@@ -1,4 +1,5 @@
-
+/* eslint-disable import/no-duplicates */
+// eslint-disable-next-line import/no-duplicates
 import { Account } from '../../../domain/entities/Account'
 import { AddAccount, AddAccountModel } from '../../../domain/usecases/AddAccount'
 import { Hasher } from '../../protocols/cryptography/Hasher'

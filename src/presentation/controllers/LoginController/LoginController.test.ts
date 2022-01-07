@@ -1,7 +1,7 @@
 import { Authentication } from '../../../domain/usecases/Authentication'
 import { UnauthorizedError } from '../../errors/UnauthorizedError'
 
-import { HttpRequest } from '../../protocols/Http'
+import { HttpRequest } from '../../protocols/HttpRequest'
 
 import { LoginController } from './LoginController'
 import { ServerError } from '../../errors/ServerError'

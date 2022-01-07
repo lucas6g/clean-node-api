@@ -5,7 +5,7 @@ import { SignupController } from './SignupController'
 
 import { ServerError } from '../../errors/ServerError'
 
-import { HttpRequest } from '../../protocols/Http'
+import { HttpRequest } from '../../protocols/HttpRequest'
 import { Validation } from '../../protocols/Validation'
 
 const makeValidationStub = (): Validation => {
