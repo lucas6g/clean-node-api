@@ -1,4 +1,5 @@
-import { HttpRequest, HttpResponse } from './Http'
+import { HttpRequest } from './HttpRequest'
+import { HttpResponse } from './HttpResponse'
 
 export interface Controller {
 
