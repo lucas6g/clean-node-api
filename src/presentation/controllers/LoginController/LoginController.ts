@@ -32,7 +32,7 @@ export class LoginController implements Controller {
         return unauthorized()
       }
 
-      console.log(ok(token))
+
 
       return ok(token)
     } catch (error) {
