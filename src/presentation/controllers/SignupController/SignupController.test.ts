@@ -161,4 +161,18 @@ describe('Signup Controller', () => {
 
     expect(authSpy).toHaveBeenCalledWith('validEmail@mail.com', 'validPassword')
   })
+  test('should return 500 Authentication trows error', async () => {
+    const { sut, authenticationStub } = makeSut()
+
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(async () => {
+      throw new Error()
+    })
+
+    const httpRequest = makeFakeHttpRequest()
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError(httpResponse.body.stack))
+  })
 })
