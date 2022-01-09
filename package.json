@@ -13,7 +13,8 @@
     "test:staged": "jest --watch --noStackTrace --silent --runInBand --findRelatedTests src",
     "test:ci": "jest --coverage --noStackTrace  --runInBand",
     "prepare": "husky install",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/main/server.ts",
+    "dev": "npm run build && docker-compose up -d",
+    "stop": "docker-compose down",
     "build": "rimraf build && tsc",
     "start": "node ./build/main/server.js"
   },
