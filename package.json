@@ -16,7 +16,8 @@
     "dev": "npm run build && docker-compose up -d",
     "stop": "docker-compose down",
     "build": "rimraf build && tsc",
-    "start": "node ./build/main/server.js"
+    "start": "node ./build/main/server.js",
+    "debug": "node --inspect=0.0.0.0:9222 --nolazy ./build/main/server.js"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.1.0",
