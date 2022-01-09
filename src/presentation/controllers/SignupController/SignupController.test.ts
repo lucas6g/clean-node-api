@@ -118,13 +118,7 @@ describe('Signup Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(201)
-    expect(httpResponse.body).toEqual({
-      id: 'validId',
-      name: 'validName',
-      email: 'validEmail@mail.com',
-      password: 'validPassword'
-
-    })
+    expect(httpResponse.body).toEqual({ token: 'anyToken' })
   })
 
   test('should call Validation whit correct value', async () => {
