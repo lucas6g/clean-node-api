@@ -8,7 +8,6 @@
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/space-before-function-paren": "off",
         "@typescript-eslint/indent": "off",
-        "prefer-promise-reject-errors": "off",
-        "import/no-duplicates": "off"
+        "prefer-promise-reject-errors": "off"
     }
 }
