@@ -4,6 +4,7 @@ import { AddAccount, AddAccountModel } from '../../../domain/usecases/AddAccount
 import { SignupController } from './SignupController'
 
 import { ServerError } from '../../errors/ServerError'
+import { EmailInUseError } from '../../errors/EmailInUseError'
 
 import { HttpRequest } from '../../protocols/HttpRequest'
 import { Validation } from '../../protocols/Validation'
@@ -22,7 +23,7 @@ const makeValidationStub = (): Validation => {
 const makeAddAccount = (): AddAccount => {
   // dependencia mockada
   class AddAccountStub implements AddAccount {
-    async add(account: AddAccountModel): Promise<Account> {
+    async add(account: AddAccountModel): Promise<Account | null> {
       const fakeAccount = {
         id: 'validId',
         name: 'validName',
@@ -168,5 +169,16 @@ describe('Signup Controller', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError(httpResponse.body.stack))
+  })
+  test('should return 403 if AddAccount returns null', async () => {
+    const { sut, addAccountStub } = makeSut()
+
+    jest.spyOn(addAccountStub, 'add').mockReturnValueOnce(Promise.resolve(null))
+    const httpRequest = makeFakeHttpRequest()
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(403)
+    expect(httpResponse.body).toEqual(new EmailInUseError())
   })
 })
