@@ -22,10 +22,12 @@ export class DbAddAccount implements AddAccount {
   }
 
   async add(accountData: AddAccountModel): Promise<Account | null> {
+    const isEmailInUse = await this.loadAccountByEmailRespository.getByEmail(accountData.email)
+
+    if (isEmailInUse) {
+      return null
+    }
     const hasherPassword = await this.hasher.hash(accountData.password)
-
-    await this.loadAccountByEmailRespository.getByEmail(accountData.email)
-
 
 
     const account = await this.addAccountRepository.save(Object.assign({}, accountData, { password: hasherPassword }))
