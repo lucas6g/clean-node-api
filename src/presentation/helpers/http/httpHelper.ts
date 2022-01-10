@@ -32,3 +32,9 @@ export function ok(data: any): HttpResponse {
     body: data
   }
 }
+export function forbidden(error: Error): HttpResponse {
+  return {
+    statusCode: 403,
+    body: error
+  }
+}

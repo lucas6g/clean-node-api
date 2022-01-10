@@ -1,7 +1,8 @@
 import { AddAccount } from '../../../domain/usecases/AddAccount'
 import { Authentication } from '../../../domain/usecases/Authentication'
+import { EmailInUseError } from '../../errors/EmailInUseError'
 
-import { badRequest, created, serverError } from '../../helpers/http/httpHelper'
+import { badRequest, created, forbidden, serverError } from '../../helpers/http/httpHelper'
 import { Controller } from '../../protocols/Controller'
 
 import { HttpRequest } from '../../protocols/HttpRequest'
@@ -35,6 +36,9 @@ export class SignupController implements Controller {
         email,
         password
       })
+      if (!account) {
+        return forbidden(new EmailInUseError())
+      }
       const token = await this.authentication.auth(account.email, account.password)
 
 
