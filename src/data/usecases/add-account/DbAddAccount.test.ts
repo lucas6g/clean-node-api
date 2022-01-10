@@ -28,8 +28,8 @@ const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   // dependencia mockada
   class LoadAccoutRepositoryStub implements LoadAccountByEmailRepository {
     async getByEmail(email: string): Promise<Account | null> {
-      const fakeAccount = makeFakeAccount()
-      return await Promise.resolve(fakeAccount)
+
+      return await Promise.resolve(null)
     }
   }
   return new LoadAccoutRepositoryStub()
@@ -142,6 +142,28 @@ describe('DbAddAccount', () => {
     await sut.add(accountData)
 
     expect(getByEmailSpy).toHaveBeenCalledWith('anyEmail@mail.com')
+  })
+  test('should returns null if LoadAccountByEmailRepository returns account', async () => {
+    const { sut, loadAccountRepositoryStub } = makeSut()
+
+    jest.spyOn(loadAccountRepositoryStub, 'getByEmail').mockReturnValueOnce(Promise.resolve(makeFakeAccount()))
+
+    const account = await sut.add(makeFakeAccount())
+
+    expect(account).toBeNull()
+  })
+  test('should trows error if LoadAccountByEmailRepository trows error', async () => {
+    const { sut, loadAccountRepositoryStub } = makeSut()
+
+    jest.spyOn(loadAccountRepositoryStub, 'getByEmail').mockImplementationOnce(() => {
+      throw new Error()
+    })
+
+    const accountData = makeFakeAccountData()
+
+    await expect(
+      sut.add(accountData)
+    ).rejects.toBeInstanceOf(Error)
   })
 
 
