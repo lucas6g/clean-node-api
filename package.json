@@ -18,7 +18,8 @@
     "tsc:w": "tsc -w",
     "build": "rimraf build && tsc",
     "start": "node ./build/main/server.js",
-    "debug": "nodemon -L --watch ./build --inspect=0.0.0.0:9222 --nolazy ./build/main/server.js"
+    "debug": "nodemon -L --watch ./build --inspect=0.0.0.0:9222 --nolazy ./build/main/server.js",
+    "cache": "jest --clearCache"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.1.0",

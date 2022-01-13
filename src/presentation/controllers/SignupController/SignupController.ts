@@ -44,6 +44,7 @@ export class SignupController implements Controller {
 
       return created({ token })
     } catch (error) {
+
       return serverError(error)
     }
   }

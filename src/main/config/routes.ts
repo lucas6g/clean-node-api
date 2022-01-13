@@ -1,10 +1,9 @@
-import { Express } from 'express'
+import { Express, Router } from 'express'
 
 import loginRoutes from '../routes/login.routes'
 
 export default function (app: Express): void {
-
-  app.use(loginRoutes)
-
+  const router = Router()
+  app.use(loginRoutes(router))
 
 }

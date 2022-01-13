@@ -1,12 +1,12 @@
 
-import { CompareFieldsValidation } from '../../../../presentation/helpers/validators/CompareFieldsValidation'
-import { EmailValidation } from '../../../../presentation/helpers/validators/EmailValidation'
-import { RequeiredFieldValidation } from '../../../../presentation/helpers/validators/RequiredFieldValidation'
-import { ValidationComposite } from '../../../../presentation/helpers/validators/ValidationComposite'
-import { EmailValidator } from '../../../../presentation/protocols/EmailValidator'
+import { EmailValidator } from '../../../../validation/protocols/EmailValidator'
+import { CompareFieldsValidation } from '../../../../validation/validators/CompareFieldsValidation'
+import { EmailValidation } from '../../../../validation/validators/EmailValidation'
+import { RequeiredFieldValidation } from '../../../../validation/validators/RequiredFieldValidation'
+import { ValidationComposite } from '../../../../validation/validators/ValidationComposite'
 import { makeSignupValidation } from './makeSignupValidation'
 
-jest.mock('../../../../presentation/helpers/validators/ValidationComposite')
+jest.mock('../../../../validation/validators/ValidationComposite')
 
 const makeEmailValidator = (): EmailValidator => {
     // dependencia mockada

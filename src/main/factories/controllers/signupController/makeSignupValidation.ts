@@ -1,10 +1,10 @@
 
-import { CompareFieldsValidation } from '../../../../presentation/helpers/validators/CompareFieldsValidation'
-import { EmailValidation } from '../../../../presentation/helpers/validators/EmailValidation'
-import { RequeiredFieldValidation } from '../../../../presentation/helpers/validators/RequiredFieldValidation'
+import { CompareFieldsValidation } from '../../../../validation/validators/CompareFieldsValidation'
+import { EmailValidation } from '../../../../validation/validators/EmailValidation'
+import { RequeiredFieldValidation } from '../../../../validation/validators/RequiredFieldValidation'
 import { Validation } from '../../../../presentation/protocols/Validation'
-import { ValidationComposite } from '../../../../presentation/helpers/validators/ValidationComposite'
-import { EmailValidatorAdpter } from '../../../adpters/validators/EmailValidatorAdpter'
+import { ValidationComposite } from '../../../../validation/validators/ValidationComposite'
+import { EmailValidatorAdpter } from '../../../../infra/validators/EmailValidatorAdpter'
 
 // composite factory
 export const makeSignupValidation = (): Validation => {

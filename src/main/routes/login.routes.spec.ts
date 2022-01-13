@@ -37,8 +37,8 @@ describe('Login Routes', () => {
   describe('POST /signup', () => {
     test('should return 201  on signup', async () => {
       const response = await request(app).post('/signup').send({
-        name: 'lucas',
-        email: 'lucas@gmail.com',
+        name: 'pedro',
+        email: 'pietro@gmail.com',
         password: '123',
         passwordConfirmation: '123'
       })

@@ -1,8 +1,9 @@
 
 import { EmailValidation } from '../validators/EmailValidation'
 
-import { EmailValidator } from '../../protocols/EmailValidator'
-import { InvalidParamError } from '../../errors/InvalidEmailError'
+import { EmailValidator } from '../protocols/EmailValidator'
+import { InvalidParamError } from '../../presentation/errors/InvalidParamError'
+
 
 const makeEmailValidator = (): EmailValidator => {
     // dependencia mockada
