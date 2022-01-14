@@ -1,5 +1,5 @@
 import { CreateSurvey } from "../../../../domain/usecases/CreateSurvey";
-import { badRequest, serverError } from "../../../helpers/http/httpHelper";
+import { badRequest, noContent, serverError } from "../../../helpers/http/httpHelper";
 import { Controller } from "../../../protocols/Controller";
 import { HttpRequest } from "../../../protocols/HttpRequest";
 import { HttpResponse } from "../../../protocols/HttpResponse";
@@ -30,7 +30,7 @@ export class CreateSurveyController implements Controller {
                 question,
                 answers
             })
-            return Promise.resolve({ body: null, statusCode: 200 })
+            return noContent()
         } catch (error) {
             return serverError(error)
         }
