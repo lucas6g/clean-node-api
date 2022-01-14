@@ -1,13 +1,16 @@
-import { AddAccount } from '../../../domain/usecases/AddAccount'
-import { Authentication } from '../../../domain/usecases/Authentication'
-import { EmailInUseError } from '../../errors/EmailInUseError'
 
-import { badRequest, created, forbidden, serverError } from '../../helpers/http/httpHelper'
-import { Controller } from '../../protocols/Controller'
+import { AddAccount } from '../../../../domain/usecases/AddAccount'
+import { Authentication } from '../../../../domain/usecases/Authentication'
+import { EmailInUseError } from '../../../errors/EmailInUseError'
+import { badRequest, created, forbidden, serverError } from '../../../helpers/http/httpHelper'
+import { Controller } from '../../../protocols/Controller'
+import { HttpRequest } from '../../../protocols/HttpRequest'
+import { HttpResponse } from '../../../protocols/HttpResponse'
+import { Validation } from '../../../protocols/Validation'
 
-import { HttpRequest } from '../../protocols/HttpRequest'
-import { HttpResponse } from '../../protocols/HttpResponse'
-import { Validation } from '../../protocols/Validation'
+
+
+
 
 export class SignupController implements Controller {
   private readonly addAccount: AddAccount

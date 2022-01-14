@@ -1,14 +1,13 @@
 
-import { Account } from '../../../domain/entities/Account'
-import { AddAccount, AddAccountModel } from '../../../domain/usecases/AddAccount'
+
+import { Account } from '../../../../domain/entities/Account'
+import { AddAccount, AddAccountModel } from '../../../../domain/usecases/AddAccount'
+import { Authentication } from '../../../../domain/usecases/Authentication'
+import { EmailInUseError } from '../../../errors/EmailInUseError'
+import { ServerError } from '../../../errors/ServerError'
+import { HttpRequest } from '../../../protocols/HttpRequest'
+import { Validation } from '../../../protocols/Validation'
 import { SignupController } from './SignupController'
-
-import { ServerError } from '../../errors/ServerError'
-import { EmailInUseError } from '../../errors/EmailInUseError'
-
-import { HttpRequest } from '../../protocols/HttpRequest'
-import { Validation } from '../../protocols/Validation'
-import { Authentication } from '../../../domain/usecases/Authentication'
 
 const makeValidationStub = (): Validation => {
   // dependencia mockada

@@ -1,12 +1,10 @@
-import { Authentication } from '../../../domain/usecases/Authentication'
-import { UnauthorizedError } from '../../errors/UnauthorizedError'
 
-import { HttpRequest } from '../../protocols/HttpRequest'
-
+import { Authentication } from '../../../../domain/usecases/Authentication'
+import { ServerError } from '../../../errors/ServerError'
+import { UnauthorizedError } from '../../../errors/UnauthorizedError'
+import { HttpRequest } from '../../../protocols/HttpRequest'
+import { Validation } from '../../../protocols/Validation'
 import { LoginController } from './LoginController'
-import { ServerError } from '../../errors/ServerError'
-import { Validation } from '../../protocols/Validation'
-
 const makeValidationStub = (): Validation => {
   // dependencia mockada
   class ValidationStub implements Validation {
