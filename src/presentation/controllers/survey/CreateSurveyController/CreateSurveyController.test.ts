@@ -105,5 +105,37 @@ describe('CreateSurvey Controller', () => {
         })
 
     })
+    test('should return 500 if  CreateSurvey trows error ', async () => {
+        const { sut, createSurveyStub } = makeSut()
+
+        const httpRequest = makeFakeHttpRequest()
+
+        jest.spyOn(createSurveyStub, 'create').mockReturnValueOnce(Promise.reject(new Error()))
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toBeInstanceOf(Error)
+
+
+
+
+    })
+    test('should return 500 if  CreateSurvey trows error ', async () => {
+        const { sut, createSurveyStub } = makeSut()
+
+        const httpRequest = makeFakeHttpRequest()
+
+        jest.spyOn(createSurveyStub, 'create').mockReturnValueOnce(Promise.reject(new Error()))
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toBeInstanceOf(Error)
+
+
+
+
+    })
 
 })
