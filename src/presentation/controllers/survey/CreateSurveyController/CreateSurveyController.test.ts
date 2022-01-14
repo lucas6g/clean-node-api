@@ -137,5 +137,20 @@ describe('CreateSurvey Controller', () => {
 
 
     })
+    test('should return 204 on success', async () => {
+        const { sut } = makeSut()
+
+        const httpRequest = makeFakeHttpRequest()
+
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(204)
+
+
+
+
+
+    })
 
 })
