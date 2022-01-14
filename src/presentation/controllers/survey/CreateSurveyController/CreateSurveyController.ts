@@ -1,3 +1,4 @@
+import { CreateSurvey } from "../../../../domain/usecases/CreateSurvey";
 import { badRequest } from "../../../helpers/http/httpHelper";
 import { Controller } from "../../../protocols/Controller";
 import { HttpRequest } from "../../../protocols/HttpRequest";
@@ -7,8 +8,10 @@ import { Validation } from "../../../protocols/Validation";
 export class CreateSurveyController implements Controller {
 
     private readonly validation: Validation
-    constructor(validation: Validation) {
+    private readonly createSurvey: CreateSurvey
 
+    constructor(validation: Validation, createSurvey: CreateSurvey) {
+        this.createSurvey = createSurvey
         this.validation = validation
 
     }
@@ -19,6 +22,12 @@ export class CreateSurveyController implements Controller {
         if (error) {
             return badRequest(error)
         }
+        const { question, answers } = request.body
+
+        await this.createSurvey.create({
+            question,
+            answers
+        })
 
         return Promise.resolve({ body: null, statusCode: 200 })
 
