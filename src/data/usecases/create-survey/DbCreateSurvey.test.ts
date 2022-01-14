@@ -60,6 +60,18 @@ describe('DbCreateSurvey', () => {
 
 
     })
+    test('should trows error if  SaveSurveyRepository trows', async () => {
+        const { sut, saveSurveyRepositoryStub } = makeSut()
+
+
+        const fakeSurvey = makeFakeSurvey()
+
+        jest.spyOn(saveSurveyRepositoryStub, 'save').mockReturnValueOnce(Promise.reject(new Error()))
+
+        await expect(sut.create(fakeSurvey)).rejects.toBeInstanceOf(Error)
+
+
+    })
 
 
 })

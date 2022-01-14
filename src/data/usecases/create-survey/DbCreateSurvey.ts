@@ -15,8 +15,5 @@ export class DbCreateSurvey implements CreateSurvey {
 
         await this.saveSurveyRepository.save(surveyData)
 
-
-
-        return Promise.resolve()
     }
 }
