@@ -1,5 +1,5 @@
 import { CreateSurvey } from "../../../../domain/usecases/CreateSurvey";
-import { badRequest } from "../../../helpers/http/httpHelper";
+import { badRequest, serverError } from "../../../helpers/http/httpHelper";
 import { Controller } from "../../../protocols/Controller";
 import { HttpRequest } from "../../../protocols/HttpRequest";
 import { HttpResponse } from "../../../protocols/HttpResponse";
@@ -17,19 +17,25 @@ export class CreateSurveyController implements Controller {
     }
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
-        const error = this.validation.validate(request.body)
+        try {
 
-        if (error) {
-            return badRequest(error)
+            const error = this.validation.validate(request.body)
+
+            if (error) {
+                return badRequest(error)
+            }
+            const { question, answers } = request.body
+
+            await this.createSurvey.create({
+                question,
+                answers
+            })
+            return Promise.resolve({ body: null, statusCode: 200 })
+        } catch (error) {
+            return serverError(error)
         }
-        const { question, answers } = request.body
 
-        await this.createSurvey.create({
-            question,
-            answers
-        })
 
-        return Promise.resolve({ body: null, statusCode: 200 })
 
     }
 
