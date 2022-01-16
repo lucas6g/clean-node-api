@@ -87,4 +87,17 @@ describe('Auth Midleware', () => {
         expect(httpResponse.body).toEqual(new AccessDaniedError())
 
     })
+    test('should returns 200 if LoadAccountByToken returns an account', async () => {
+
+        const { sut } = makeSut()
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(200)
+        expect(httpResponse.body).toEqual({
+            accountId: 'anyId'
+        })
+
+
+    })
 })
