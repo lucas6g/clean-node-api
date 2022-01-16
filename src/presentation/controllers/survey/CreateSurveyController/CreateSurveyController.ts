@@ -19,6 +19,7 @@ export class CreateSurveyController implements Controller {
     async handle(request: HttpRequest): Promise<HttpResponse> {
         try {
 
+
             const error = this.validation.validate(request.body)
 
             if (error) {
@@ -32,6 +33,7 @@ export class CreateSurveyController implements Controller {
             })
             return noContent()
         } catch (error) {
+
             return serverError(error)
         }
 
