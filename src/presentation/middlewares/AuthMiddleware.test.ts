@@ -33,11 +33,11 @@ interface SutTypes {
     loadAccountByTokenStub: LoadAccountByToken
 
 }
-const makeSut = (): SutTypes => {
+const makeSut = (role?: string): SutTypes => {
 
 
     const loadAccountByTokenStub = makeAccountByTokenRepositoryStub()
-    const sut = new AuthMiddleware(loadAccountByTokenStub)
+    const sut = new AuthMiddleware(loadAccountByTokenStub, role)
 
     return {
         sut,
@@ -52,7 +52,7 @@ const makeSut = (): SutTypes => {
 describe('Auth Midleware', () => {
 
 
-    test('should 403 if no auth token exists in headers', async () => {
+    test('should return  403 if no auth token exists in headers', async () => {
         const { sut } = makeSut()
 
         const httpResponse = await sut.handle({})
@@ -62,9 +62,10 @@ describe('Auth Midleware', () => {
 
     })
 
-    test('should return LoadAccountByToken whit correct access token', async () => {
+    test('should call LoadAccountByToken whit correct access token', async () => {
 
-        const { loadAccountByTokenStub, sut } = makeSut()
+        const role = 'anyRole'
+        const { loadAccountByTokenStub, sut } = makeSut(role)
 
 
         const getByTokenSpy = jest.spyOn(loadAccountByTokenStub, 'getByToken')
@@ -72,7 +73,7 @@ describe('Auth Midleware', () => {
 
         await sut.handle(httpRequest)
 
-        expect(getByTokenSpy).toHaveBeenCalledWith('anyToken')
+        expect(getByTokenSpy).toHaveBeenCalledWith('anyToken', role)
 
     })
     test('should 403 if LoadAccountByToken returns null', async () => {
