@@ -3,6 +3,8 @@ import { AuthMiddleware } from './AuthMiddleware'
 import { AccessDaniedError } from '../errors/AccessDaniedError'
 import { LoadAccountByToken } from '../../domain/usecases/LoadAccountByToken'
 import { Account } from "../../domain/entities/Account"
+import { ServerError } from "../errors/ServerError"
+
 const httpRequest: HttpRequest = {
     headers: {
         'x-access-token': 'anyToken'
@@ -97,6 +99,22 @@ describe('Auth Midleware', () => {
         expect(httpResponse.body).toEqual({
             accountId: 'anyId'
         })
+
+
+    })
+    test('should returns 500 if LoadAccountByToken trows error', async () => {
+
+        const { sut, loadAccountByTokenStub } = makeSut()
+
+
+        jest.spyOn(loadAccountByTokenStub, 'getByToken').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toEqual(new ServerError(httpResponse.body.stack))
 
 
     })
