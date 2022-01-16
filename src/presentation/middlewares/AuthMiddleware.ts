@@ -1,6 +1,7 @@
+
 import { LoadAccountByToken } from "../../domain/usecases/LoadAccountByToken";
 import { AccessDaniedError } from "../errors/AccessDaniedError";
-import { forbidden } from "../helpers/http/httpHelper";
+import { forbidden, ok } from "../helpers/http/httpHelper";
 import { HttpRequest } from "../protocols/HttpRequest";
 import { HttpResponse } from "../protocols/HttpResponse";
 import { Middleware } from "../protocols/Middleware";
@@ -18,7 +19,11 @@ export class AuthMiddleware implements Middleware {
         const token = request.headers?.['x-access-token']
         if (token) {
 
-            await this.loadAccountByToken.getByToken(token)
+            const account = await this.loadAccountByToken.getByToken(token)
+
+            if (account) {
+                return ok({ accountId: account.id })
+            }
         }
 
 
