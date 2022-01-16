@@ -10,24 +10,49 @@ const httpRequest: HttpRequest = {
 }
 
 
-class LoadAccountByRepositoryStub implements LoadAccountByTokenRepository {
-    async getByToken(token: string, role?: string): Promise<Account> {
-        return await Promise.resolve({
-            id: 'anyId',
-            name: 'anyName',
-            email: 'anyEmail@mail.com',
-            password: 'hashedPassword'
-        })
+const makeAccountByTokenRepositoryStub = (): LoadAccountByTokenRepository => {
+
+    class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
+        async getByToken(token: string, role?: string): Promise<Account> {
+            return await Promise.resolve({
+                id: 'anyId',
+                name: 'anyName',
+                email: 'anyEmail@mail.com',
+                password: 'hashedPassword'
+            })
+        }
+    }
+    return new LoadAccountByTokenRepositoryStub()
+}
+
+
+interface SutTypes {
+    sut: AuthMiddleware
+    loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository
+
+}
+const makeSut = (): SutTypes => {
+
+
+    const loadAccountByTokenRepositoryStub = makeAccountByTokenRepositoryStub()
+    const sut = new AuthMiddleware(loadAccountByTokenRepositoryStub)
+
+    return {
+        sut,
+        loadAccountByTokenRepositoryStub
+
     }
 }
+
+
 
 
 describe('Auth Midleware', () => {
 
 
     test('should 403 if no auth token exists in headers', async () => {
-        const loadAccountByTokenRepositoryStub = new LoadAccountByRepositoryStub()
-        const sut = new AuthMiddleware(loadAccountByTokenRepositoryStub)
+        const { sut } = makeSut()
+
         const httpResponse = await sut.handle({})
 
         expect(httpResponse.statusCode).toBe(403)
@@ -36,8 +61,7 @@ describe('Auth Midleware', () => {
     })
     test('should call LoadAccountByToken whit correct access token', async () => {
 
-        const loadAccountByTokenRepositoryStub = new LoadAccountByRepositoryStub()
-        const sut = new AuthMiddleware(loadAccountByTokenRepositoryStub)
+        const { loadAccountByTokenRepositoryStub, sut } = makeSut()
 
 
         const getByTokenSpy = jest.spyOn(loadAccountByTokenRepositoryStub, 'getByToken')
