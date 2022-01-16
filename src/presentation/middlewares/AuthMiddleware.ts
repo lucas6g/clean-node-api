@@ -1,4 +1,4 @@
-import { LoadAccountByTokenRepository } from "../../data/protocols/db/account/LoadAccountByTokenRepository";
+import { LoadAccountByToken } from "../../domain/usecases/LoadAccountByToken";
 import { AccessDaniedError } from "../errors/AccessDaniedError";
 import { forbidden } from "../helpers/http/httpHelper";
 import { HttpRequest } from "../protocols/HttpRequest";
@@ -7,10 +7,10 @@ import { Middleware } from "../protocols/Middleware";
 
 export class AuthMiddleware implements Middleware {
 
-    private readonly loadAccountByTokenRepository: LoadAccountByTokenRepository
+    private readonly loadAccountByToken: LoadAccountByToken
 
-    constructor(loadAccountByTokenRepository: LoadAccountByTokenRepository) {
-        this.loadAccountByTokenRepository = loadAccountByTokenRepository
+    constructor(loadAccountByToken: LoadAccountByToken) {
+        this.loadAccountByToken = loadAccountByToken
     }
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -18,7 +18,7 @@ export class AuthMiddleware implements Middleware {
         const token = request.headers?.['x-access-token']
         if (token) {
 
-            await this.loadAccountByTokenRepository.getByToken(token)
+            await this.loadAccountByToken.getByToken(token)
         }
 
 
