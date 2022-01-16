@@ -60,7 +60,7 @@ describe('Auth Midleware', () => {
 
     })
 
-    test('should return LoadAccountByToken returns null', async () => {
+    test('should return LoadAccountByToken whit correct access token', async () => {
 
         const { loadAccountByTokenStub, sut } = makeSut()
 
@@ -71,6 +71,20 @@ describe('Auth Midleware', () => {
         await sut.handle(httpRequest)
 
         expect(getByTokenSpy).toHaveBeenCalledWith('anyToken')
+
+    })
+    test('should 403 if LoadAccountByToken returns null', async () => {
+
+        const { loadAccountByTokenStub, sut } = makeSut()
+
+
+        jest.spyOn(loadAccountByTokenStub, 'getByToken').mockReturnValueOnce(Promise.resolve(null))
+
+
+        const httpResponse = await sut.handle(httpRequest)
+
+        expect(httpResponse.statusCode).toBe(403)
+        expect(httpResponse.body).toEqual(new AccessDaniedError())
 
     })
 })
