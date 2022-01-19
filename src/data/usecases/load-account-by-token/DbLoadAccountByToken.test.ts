@@ -3,7 +3,28 @@ import { LoadAccountByToken } from '../../../domain/usecases/LoadAccountByToken'
 import { TokenVerifier } from '../../protocols/cryptography/TokenVerifier'
 import { DbLoadAccountByToken } from './DbLoadAccountByToken'
 
+import { LoadAccountByTokenRepository } from '../../protocols/db/account/LoadAccountByTokenRepository'
+import { Account } from '../../../domain/entities/Account'
 
+
+
+const makeLoadAccountByTokenRepositoryStub = (): LoadAccountByTokenRepository => {
+    class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
+
+        async loadByToken(token: string, role?: string): Promise<Account | null> {
+
+            return Promise.resolve({
+                id: 'anyId',
+                name: 'anyName',
+                email: 'anyEmail@mail.com',
+                password: 'hashedPassword'
+
+            })
+        }
+
+    }
+    return new LoadAccountByTokenRepositoryStub()
+}
 
 const makeTokenVerifierStub = (): TokenVerifier => {
     class TokenVerifierStub implements TokenVerifier {
@@ -18,19 +39,22 @@ const makeTokenVerifierStub = (): TokenVerifier => {
 interface SutTypes {
     sut: LoadAccountByToken
     tokenVerifierStub: TokenVerifier
+    loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository
 
 
 }
 const makeSut = (): SutTypes => {
 
     const tokenVerifierStub = makeTokenVerifierStub()
+    const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepositoryStub()
 
 
-    const sut = new DbLoadAccountByToken(tokenVerifierStub)
+    const sut = new DbLoadAccountByToken(tokenVerifierStub, loadAccountByTokenRepositoryStub)
 
     return {
         sut,
-        tokenVerifierStub
+        tokenVerifierStub,
+        loadAccountByTokenRepositoryStub
 
     }
 }
@@ -65,4 +89,19 @@ describe('DbLoadAccountByToken', () => {
 
 
     })
+
+    test('should call LoadAccountByTokenRepository whit correct values', async () => {
+
+        const { sut, loadAccountByTokenRepositoryStub } = makeSut()
+
+        const loadByTokenSpy = jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken')
+
+        await sut.getByToken('anyToken', 'anyRole')
+
+
+        expect(loadByTokenSpy).toHaveBeenCalledWith('anyToken', 'anyRole')
+
+
+    })
+
 })
