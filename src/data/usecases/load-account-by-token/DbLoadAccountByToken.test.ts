@@ -39,11 +39,7 @@ const makeSut = (): SutTypes => {
 describe('DbLoadAccountByToken', () => {
     test('should call TokenVerifier whit correct values', async () => {
 
-
-
         const { tokenVerifierStub, sut } = makeSut()
-
-
 
         const verifySpy = jest.spyOn(tokenVerifierStub, 'verify')
 
@@ -51,6 +47,21 @@ describe('DbLoadAccountByToken', () => {
 
 
         expect(verifySpy).toHaveBeenCalledWith('anyToken')
+
+
+    })
+    test('should returns null if TokenVerifier returns null', async () => {
+
+        const { sut, tokenVerifierStub } = makeSut()
+
+
+
+        jest.spyOn(tokenVerifierStub, 'verify').mockReturnValue(Promise.resolve(null))
+
+        const account = await sut.getByToken('anyToken', 'anyRole')
+
+
+        expect(account).toBeNull()
 
 
     })
