@@ -145,6 +145,19 @@ describe('DbLoadAccountByToken', () => {
 
 
     })
+    test('should trows exeption if TokenVerifier trows exeption', async () => {
+
+        const { sut, tokenVerifierStub } = makeSut()
+
+
+        jest.spyOn(tokenVerifierStub, 'verify').mockReturnValueOnce(Promise.reject(new Error()))
+
+        await expect(
+            sut.getByToken('anyToken', 'anyRole')
+        ).rejects.toBeInstanceOf(Error)
+
+
+    })
 
 
 })
