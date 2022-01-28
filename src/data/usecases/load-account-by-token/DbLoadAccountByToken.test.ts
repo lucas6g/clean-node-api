@@ -132,6 +132,19 @@ describe('DbLoadAccountByToken', () => {
 
 
     })
+    test('should trows exepteion if LoadAccountByTokenRepository trows exeption ', async () => {
+
+        const { sut, loadAccountByTokenRepositoryStub } = makeSut()
+
+
+        jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken').mockReturnValueOnce(Promise.reject(new Error()))
+
+        await expect(
+            sut.getByToken('anyToken', 'anyRole')
+        ).rejects.toBeInstanceOf(Error)
+
+
+    })
 
 
 })
