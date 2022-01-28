@@ -103,5 +103,19 @@ describe('DbLoadAccountByToken', () => {
 
 
     })
+    test('should returns null if LoadAccountByTokenRepository returns null', async () => {
+
+        const { sut, loadAccountByTokenRepositoryStub } = makeSut()
+
+        jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken').mockReturnValue(Promise.resolve(null))
+
+        const account = await sut.getByToken('anyToken', 'anyRole')
+
+
+        expect(account).toBeNull()
+
+
+    })
+
 
 })
