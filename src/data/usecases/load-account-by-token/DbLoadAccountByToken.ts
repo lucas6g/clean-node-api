@@ -16,11 +16,15 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
 
     async getByToken(token: string, role?: string): Promise<Account | null> {
 
-        await this.tokenVerifier.verify(token)
+        const verifiedToken = await this.tokenVerifier.verify(token)
 
-        this.loadAccountByTokenRepository.loadByToken(token, role)
+        if (!verifiedToken) {
+            return null
+        }
+        const account = await this.loadAccountByTokenRepository.loadByToken(token, role)
 
-        return Promise.resolve(null)
+
+        return account
     }
 
 }
