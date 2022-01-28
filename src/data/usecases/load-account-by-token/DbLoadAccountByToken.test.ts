@@ -116,6 +116,22 @@ describe('DbLoadAccountByToken', () => {
 
 
     })
+    test('should returns account on success', async () => {
+
+        const { sut } = makeSut()
+
+        const account = await sut.getByToken('anyToken', 'anyRole')
+
+        expect(account).toEqual({
+            id: 'anyId',
+            name: 'anyName',
+            email: 'anyEmail@mail.com',
+            password: 'hashedPassword'
+
+        })
+
+
+    })
 
 
 })
