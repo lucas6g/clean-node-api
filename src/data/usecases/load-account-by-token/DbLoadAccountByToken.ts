@@ -23,6 +23,9 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
         }
         const account = await this.loadAccountByTokenRepository.loadByToken(token, role)
 
+        if (!account) {
+            return null
+        }
 
         return account
     }
