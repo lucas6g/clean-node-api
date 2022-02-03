@@ -1,13 +1,13 @@
 import { WithId, ObjectId } from 'mongodb'
+import { LoadAccountByTokenRepository } from '../../../../data/protocols/db/account/LoadAccountByTokenRepository'
 import { UpdateTokenRepository } from '../../../../data/protocols/db/account/UpdateTokenRepository'
 import { AddAccountRepository } from '../../../../data/usecases/add-account/AddAccountRepository'
 import { LoadAccountByEmailRepository } from '../../../../data/usecases/authentication/LoadAccountByEmailRepository'
 import { Account } from '../../../../domain/entities/Account'
 import { AddAccountModel } from '../../../../domain/usecases/AddAccount'
-import { LoadAccountByToken } from '../../../../domain/usecases/LoadAccountByToken'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateTokenRepository, LoadAccountByToken {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateTokenRepository, LoadAccountByTokenRepository {
   async save(accountData: AddAccountModel): Promise<Account> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
@@ -51,7 +51,9 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     })
   }
 
-  async getByToken(token: string, role?: string | undefined): Promise<Account | null> {
+  async loadByToken(token: string, role?: string | undefined): Promise<Account | null> {
+
+
     const accountCollection = await MongoHelper.getCollection('accounts')
 
     const result = await accountCollection.findOne<WithId<Account>>({ token })
@@ -70,6 +72,8 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     return account
 
   }
+
+
 
 
 

@@ -79,10 +79,10 @@ describe('Account Mongo Repository', () => {
 
     expect(account?.token).toBe('anyToken')
   })
-  test('should return an account on getByToken succsses whitout role', async () => {
+  test('should return an account on loadByToken succsses whitout role', async () => {
     const sut = makeSut()
 
-    const account = await sut.getByToken('anyToken')
+    const account = await sut.loadByToken('anyToken')
 
     expect(account).toBeTruthy()
     expect(account?.id).toBeTruthy()
@@ -91,10 +91,10 @@ describe('Account Mongo Repository', () => {
     expect(account?.password).toBe('anyPassword')
 
   })
-  test('should return an account on getByToken succsses whit role', async () => {
+  test('should return an account on loadByToken succsses whit role', async () => {
     const sut = makeSut()
 
-    const account = await sut.getByToken('anyToken', 'anyRole')
+    const account = await sut.loadByToken('anyToken', 'anyRole')
 
     expect(account).toBeTruthy()
     expect(account?.id).toBeTruthy()
@@ -103,10 +103,10 @@ describe('Account Mongo Repository', () => {
     expect(account?.password).toBe('anyPassword')
 
   })
-  test('should return an account on getByToken succsses whit role', async () => {
+  test('should return an account on loadByToken succsses whit role', async () => {
     const sut = makeSut()
 
-    const account = await sut.getByToken('anyToken', 'anyRole')
+    const account = await sut.loadByToken('anyToken', 'anyRole')
 
     expect(account).toBeTruthy()
     expect(account?.id).toBeTruthy()
@@ -115,10 +115,10 @@ describe('Account Mongo Repository', () => {
     expect(account?.password).toBe('anyPassword')
 
   })
-  test('should return null on getByToken fails', async () => {
+  test('should return null on loadByToken fails', async () => {
     const sut = makeSut()
 
-    const account = await sut.getByToken('invalidToken')
+    const account = await sut.loadByToken('invalidToken')
 
     expect(account).toBeNull()
   })
