@@ -103,4 +103,23 @@ describe('Account Mongo Repository', () => {
     expect(account?.password).toBe('anyPassword')
 
   })
+  test('should return an account on getByToken succsses whit role', async () => {
+    const sut = makeSut()
+
+    const account = await sut.getByToken('anyToken', 'anyRole')
+
+    expect(account).toBeTruthy()
+    expect(account?.id).toBeTruthy()
+    expect(account?.name).toBe('anyName')
+    expect(account?.email).toBe('anyMail@mail.com')
+    expect(account?.password).toBe('anyPassword')
+
+  })
+  test('should return null on getByToken fails', async () => {
+    const sut = makeSut()
+
+    const account = await sut.getByToken('invalidToken')
+
+    expect(account).toBeNull()
+  })
 })
