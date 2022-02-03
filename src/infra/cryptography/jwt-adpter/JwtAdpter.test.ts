@@ -1,16 +1,20 @@
 import { JwtAdpter } from './JwtAdpter'
 import jwt from 'jsonwebtoken'
 import { TokenGenerator } from '../../../data/protocols/cryptography/TokenGenerator'
+import { TokenVerifier } from '../../../data/protocols/cryptography/TokenVerifier'
 
 jest.mock('jsonwebtoken', () => {
     return {
         sign(): string {
             return 'anyToken'
+        },
+        verify(): string {
+            return 'anyValue'
         }
     }
 })
 
-const makeSut = (): TokenGenerator => {
+const makeSut = (): TokenGenerator & TokenVerifier => {
     const secret = 'secret'
     return new JwtAdpter(secret)
 }
@@ -39,5 +43,13 @@ describe('JwtAdpter', () => {
         })
 
         await expect(sut.generate('anyValue')).rejects.toBeInstanceOf(Error)
+    })
+    test('should call verify whit correct values', async () => {
+        const sut = makeSut()
+
+        const signSpy = jest.spyOn(jwt, 'verify')
+        await sut.verify('anyToken')
+
+        expect(signSpy).toHaveBeenCalledWith('anyToken', 'secret')
     })
 })
