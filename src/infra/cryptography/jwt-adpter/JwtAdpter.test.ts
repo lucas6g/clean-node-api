@@ -52,4 +52,11 @@ describe('JwtAdpter', () => {
 
         expect(signSpy).toHaveBeenCalledWith('anyToken', 'secret')
     })
+    test('should retusn a value on verify success', async () => {
+        const sut = makeSut()
+
+        const value = await sut.verify('anyToken')
+
+        expect(value).toBe('anyValue')
+    })
 })
