@@ -4,9 +4,10 @@ import { AddAccountRepository } from '../../../../data/usecases/add-account/AddA
 import { LoadAccountByEmailRepository } from '../../../../data/usecases/authentication/LoadAccountByEmailRepository'
 import { Account } from '../../../../domain/entities/Account'
 import { AddAccountModel } from '../../../../domain/usecases/AddAccount'
+import { LoadAccountByToken } from '../../../../domain/usecases/LoadAccountByToken'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateTokenRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateTokenRepository, LoadAccountByToken {
   async save(accountData: AddAccountModel): Promise<Account> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
@@ -45,9 +46,31 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.updateOne({ _id: new ObjectId(id) }, {
       $set: {
-        // eslint-disable-next-line quote-props
         token
       }
     })
   }
+
+  async getByToken(token: string, role?: string | undefined): Promise<Account | null> {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+
+    const result = await accountCollection.findOne<WithId<Account>>({ token })
+
+    if (!result) {
+      return null
+    }
+
+    const account = {
+      id: String(result._id),
+      name: result.name,
+      email: result.email,
+      password: result.password
+    }
+
+    return account
+
+  }
+
+
+
 }
