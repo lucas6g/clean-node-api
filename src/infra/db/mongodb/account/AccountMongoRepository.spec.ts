@@ -23,7 +23,8 @@ describe('Account Mongo Repository', () => {
 
       name: 'anyName',
       email: 'anyMail@mail.com',
-      password: 'anyPassword'
+      password: 'anyPassword',
+      token: 'anyToken'
     })
   })
   afterEach(async () => {
@@ -76,5 +77,17 @@ describe('Account Mongo Repository', () => {
     const account = await accountCollection.findOne({ _id: insertResult.insertedId })
 
     expect(account?.token).toBe('anyToken')
+  })
+  test('should return an account on getByToken succsses whitout role', async () => {
+    const sut = makeSut()
+
+    const account = await sut.getByToken('anyToken')
+
+    expect(account).toBeTruthy()
+    expect(account?.id).toBeTruthy()
+    expect(account?.name).toBe('anyName')
+    expect(account?.email).toBe('anyMail@mail.com')
+    expect(account?.password).toBe('anyPassword')
+
   })
 })
