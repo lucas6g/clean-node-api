@@ -24,7 +24,8 @@ describe('Account Mongo Repository', () => {
       name: 'anyName',
       email: 'anyMail@mail.com',
       password: 'anyPassword',
-      token: 'anyToken'
+      token: 'anyToken',
+      role: 'anyRole'
     })
   })
   afterEach(async () => {
@@ -82,6 +83,18 @@ describe('Account Mongo Repository', () => {
     const sut = makeSut()
 
     const account = await sut.getByToken('anyToken')
+
+    expect(account).toBeTruthy()
+    expect(account?.id).toBeTruthy()
+    expect(account?.name).toBe('anyName')
+    expect(account?.email).toBe('anyMail@mail.com')
+    expect(account?.password).toBe('anyPassword')
+
+  })
+  test('should return an account on getByToken succsses whit role', async () => {
+    const sut = makeSut()
+
+    const account = await sut.getByToken('anyToken', 'anyRole')
 
     expect(account).toBeTruthy()
     expect(account?.id).toBeTruthy()
