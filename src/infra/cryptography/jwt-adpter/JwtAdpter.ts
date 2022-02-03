@@ -1,8 +1,9 @@
 
 import { TokenGenerator } from '../../../data/protocols/cryptography/TokenGenerator'
-import { sign } from 'jsonwebtoken'
+import { sign, verify } from 'jsonwebtoken'
+import { TokenVerifier } from '../../../data/protocols/cryptography/TokenVerifier'
 
-export class JwtAdpter implements TokenGenerator {
+export class JwtAdpter implements TokenGenerator, TokenVerifier {
     private readonly secret: string
 
     constructor(secret: string) {
@@ -13,4 +14,10 @@ export class JwtAdpter implements TokenGenerator {
         const token = sign({ id: value }, this.secret)
         return await Promise.resolve(token)
     }
+    async verify(token: string): Promise<string | null> {
+        const payload = verify(token, this.secret)
+        return await Promise.resolve(null)
+    }
+
+
 }
