@@ -13,7 +13,11 @@ export class DbVerifyPermition implements VerifyPermition {
 
     async verify(accountId: string, role: string): Promise<boolean> {
 
-        await this.loadAccountByIdRespository.loadById(accountId)
+        const account = await this.loadAccountByIdRespository.loadById(accountId)
+
+        if (!account) {
+            return false
+        }
 
         return Promise.resolve(true)
 
