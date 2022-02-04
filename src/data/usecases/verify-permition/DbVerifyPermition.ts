@@ -19,6 +19,12 @@ export class DbVerifyPermition implements VerifyPermition {
             return false
         }
 
+        if (account.role !== role) {
+            return false
+        }
+
+
+
         return Promise.resolve(true)
 
     }
