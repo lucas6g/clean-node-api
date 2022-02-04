@@ -67,6 +67,24 @@ describe('PermitionsMiddleware', () => {
 
 
     })
+    test('should returns 403 if VerifyPemition  returns false', async () => {
+
+        const { verifyPermitionStub, sut } = makeSut('anyRole')
+
+
+        jest.spyOn(verifyPermitionStub, 'verify').mockReturnValueOnce(Promise.resolve(false))
+
+
+        const httpResponse = await sut.handle({
+            body: {
+                accountId: 'anyAccountId'
+            }
+        })
+
+        expect(httpResponse.statusCode).toBe(403)
+        expect(httpResponse.body).toEqual(new AccessDaniedError())
+
+    })
 
 
 
