@@ -14,7 +14,8 @@ const makeLoadAccountByIdRepositoryStub = (): LoadAccountByIdRepository => {
                 id: 'anyId',
                 name: 'anyName',
                 email: 'anyEmail@mail.com',
-                password: 'hashedPassword'
+                password: 'hashedPassword',
+                role: 'anyRole'
 
             })
         }
@@ -90,14 +91,25 @@ describe('DbVerifyPermition', () => {
     })
     test('should returns false if account role do not match', async () => {
 
-        const { sut } = makeSut()
+        const { sut, loadAccountByIdRepositoryStub } = makeSut()
 
+        jest.spyOn(loadAccountByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.resolve({
+            id: 'anyId',
+            name: 'anyName',
+            email: 'anyEmail@mail.com',
+            password: 'hashedPassword',
+            role: 'differentRole'
 
+        })
+        )
         const hasPermition = await sut.verify('anyAccountId', 'anyRole')
 
         expect(hasPermition).toBe(false)
 
     })
+
+
+
 
 
 })
