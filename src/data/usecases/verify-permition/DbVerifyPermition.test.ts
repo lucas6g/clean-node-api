@@ -2,26 +2,55 @@
 import { DbVerifyPermition } from './DbVerifyPermition'
 import { LoadAccountByIdRepository } from '../../../data/protocols/db/account/LoadAccountByIdRepository'
 import { Account } from '../../../domain/entities/Account'
+import { VerifyPermition } from '../../../domain/usecases/VerifyPermition'
+
+
+const makeLoadAccountByIdRepositoryStub = (): LoadAccountByIdRepository => {
+    class LoadAccountByIdRepositoryStub implements LoadAccountByIdRepository {
+
+        async loadById(accountId: string): Promise<Account> {
+
+            return Promise.resolve({
+                id: 'anyId',
+                name: 'anyName',
+                email: 'anyEmail@mail.com',
+                password: 'hashedPassword'
+
+            })
+        }
+
+    }
+    return new LoadAccountByIdRepositoryStub()
+}
+interface SutTypes {
+    sut: VerifyPermition
+    loadAccountByIdRepositoryStub: LoadAccountByIdRepository
+
+
+
+}
+const makeSut = (): SutTypes => {
+
+    const loadAccountByIdRepositoryStub = makeLoadAccountByIdRepositoryStub()
+
+    const sut = new DbVerifyPermition(loadAccountByIdRepositoryStub)
+
+    return {
+        sut,
+        loadAccountByIdRepositoryStub,
+
+
+    }
+}
+
 
 describe('DbVerifyPermition', () => {
     test('should call LoadAccountByIdRepository whit correct value', async () => {
 
-        class LoadAccountByIdStub implements LoadAccountByIdRepository {
-            async loadById(accountId: string): Promise<Account | null> {
-                return await Promise.resolve({
-                    id: 'anyId',
-                    name: 'anyName',
-                    email: 'anyEmail@mail.com',
-                    password: 'hashedPassword'
-                })
-            }
-        }
 
+        const { loadAccountByIdRepositoryStub, sut } = makeSut()
 
-        const loadAccountByIdStub = new LoadAccountByIdStub()
-        const sut = new DbVerifyPermition(loadAccountByIdStub)
-
-        const loadByIdSpy = jest.spyOn(loadAccountByIdStub, 'loadById')
+        const loadByIdSpy = jest.spyOn(loadAccountByIdRepositoryStub, 'loadById')
 
 
         await sut.verify('anyAccountId', 'anyRole')
