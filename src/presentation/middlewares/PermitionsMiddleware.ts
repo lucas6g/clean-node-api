@@ -1,6 +1,7 @@
+
 import { VerifyPermition } from "../../domain/usecases/VerifyPermition";
 import { AccessDaniedError } from "../errors/AccessDaniedError";
-import { forbidden } from "../helpers/http/httpHelper";
+import { forbidden, ok } from "../helpers/http/httpHelper";
 import { HttpRequest } from "../protocols/HttpRequest";
 import { HttpResponse } from "../protocols/HttpResponse";
 import { Middleware } from "../protocols/Middleware";
@@ -21,9 +22,14 @@ export class PermitionsMiddleware implements Middleware {
 
         if (accountId) {
 
-            await this.verifyPermition.verify(accountId, this.role)
-        }
+            const hasPermition = await this.verifyPermition.verify(accountId, this.role)
 
+            if (hasPermition) {
+                return ok({ accountId })
+            }
+
+
+        }
 
         return Promise.resolve(forbidden(new AccessDaniedError()))
 
