@@ -122,4 +122,19 @@ describe('Account Mongo Repository', () => {
 
     expect(account).toBeNull()
   })
+
+
+  test('should return an account on loadById succses', async () => {
+    const sut = makeSut()
+
+    const account = await sut.loadById(insertResult.insertedId.toString())
+
+    expect(account).toBeTruthy()
+    expect(account?.id).toBeTruthy()
+    expect(account?.name).toBe('anyName')
+    expect(account?.email).toBe('anyMail@mail.com')
+    expect(account?.password).toBe('anyPassword')
+    expect(account?.role).toBe('anyRole')
+  })
+
 })
