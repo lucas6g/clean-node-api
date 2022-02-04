@@ -1,6 +1,7 @@
 
 import { VerifyPermition } from "../../domain/usecases/VerifyPermition"
 import { AccessDaniedError } from "../errors/AccessDaniedError"
+
 import { Middleware } from "../protocols/Middleware"
 
 import { PermitionsMiddleware } from './PermitionsMiddleware'
@@ -85,6 +86,26 @@ describe('PermitionsMiddleware', () => {
         expect(httpResponse.body).toEqual(new AccessDaniedError())
 
     })
+
+    test('should returns 200 if VerifyPemition retuns true', async () => {
+
+        const { sut } = makeSut('anyRole')
+
+        const httpResponse = await sut.handle({
+            body: {
+                accountId: 'anyAccountId'
+            }
+        })
+
+        expect(httpResponse.statusCode).toBe(200)
+        expect(httpResponse.body).toEqual({
+            accountId: 'anyAccountId'
+        })
+
+
+    })
+
+
 
 
 
