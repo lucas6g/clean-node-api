@@ -88,6 +88,16 @@ describe('DbVerifyPermition', () => {
 
 
     })
+    test('should returns false if account role do not match', async () => {
+
+        const { sut } = makeSut()
+
+
+        const hasPermition = await sut.verify('anyAccountId', 'anyRole')
+
+        expect(hasPermition).toBe(false)
+
+    })
 
 
 })
