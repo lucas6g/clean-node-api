@@ -75,6 +75,19 @@ describe('DbVerifyPermition', () => {
         expect(hasPermition).toBe(false)
 
     })
+    test('should trows exeption if LoadAccountByIdRepository trows exeption ', async () => {
+
+        const { sut, loadAccountByIdRepositoryStub } = makeSut()
+
+
+        jest.spyOn(loadAccountByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.reject(new Error()))
+
+        await expect(
+            sut.verify('anyAccountId', 'anyRole')
+        ).rejects.toBeInstanceOf(Error)
+
+
+    })
 
 
 })
