@@ -137,4 +137,12 @@ describe('Account Mongo Repository', () => {
     expect(account?.role).toBe('anyRole')
   })
 
+  test('should return null on loadById fails', async () => {
+    const sut = makeSut()
+
+    const account = await sut.loadById('696e76616c696449646e666a')
+
+    expect(account).toBeNull()
+  })
+
 })
