@@ -107,6 +107,16 @@ describe('DbVerifyPermition', () => {
         expect(hasPermition).toBe(false)
 
     })
+    test('should returns true on account role match', async () => {
+
+        const { sut } = makeSut()
+
+
+        const hasPermition = await sut.verify('anyAccountId', 'anyRole')
+
+        expect(hasPermition).toBe(true)
+
+    })
 
 
 
