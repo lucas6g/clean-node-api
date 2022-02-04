@@ -1,7 +1,7 @@
 
 import { VerifyPermition } from "../../domain/usecases/VerifyPermition"
 import { AccessDaniedError } from "../errors/AccessDaniedError"
-
+import { ServerError } from "../errors/ServerError"
 import { Middleware } from "../protocols/Middleware"
 
 import { PermitionsMiddleware } from './PermitionsMiddleware'
@@ -105,7 +105,26 @@ describe('PermitionsMiddleware', () => {
 
     })
 
+    test('should returns 500 if LoadAccountByToken trows error', async () => {
 
+        const { sut, verifyPermitionStub } = makeSut('anyRole')
+
+
+        jest.spyOn(verifyPermitionStub, 'verify').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        const httpResponse = await sut.handle({
+            body: {
+                accountId: 'anyAccountId'
+            }
+        })
+
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toEqual(new ServerError(httpResponse.body.stack))
+
+
+    })
 
 
 
