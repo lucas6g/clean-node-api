@@ -59,6 +59,22 @@ describe('DbVerifyPermition', () => {
         expect(loadByIdSpy).toHaveBeenCalledWith('anyAccountId')
 
     })
+    test('should returns false if LoadAccountByIdRepository returns null', async () => {
+
+
+        const { loadAccountByIdRepositoryStub, sut } = makeSut()
+
+
+        jest.spyOn(loadAccountByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
+
+
+
+        const hasPermition = await sut.verify('anyAccountId', 'anyRole')
+
+
+        expect(hasPermition).toBe(false)
+
+    })
 
 
 })
