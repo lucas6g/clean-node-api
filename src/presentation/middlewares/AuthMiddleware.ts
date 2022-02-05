@@ -22,9 +22,11 @@ export class AuthMiddleware implements Middleware {
         try {
 
             const token = request.headers?.['x-access-token']
+
             if (token) {
 
                 const account = await this.loadAccountByToken.getByToken(token, this.role)
+
 
                 if (account) {
                     return ok({ accountId: account.id })

@@ -18,10 +18,11 @@ export class PermitionsMiddleware implements Middleware {
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
 
-
         try {
 
-            const accountId = request.body?.['accountId']
+            const accountId = request.accountId
+
+
 
             if (accountId) {
 
