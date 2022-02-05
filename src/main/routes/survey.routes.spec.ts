@@ -40,7 +40,7 @@ describe('Survey Routes', () => {
         token = sign({ accountId }, env.jwtSecret)
 
 
-        await accountCollection.updateOne({ _id: accountId }, {
+        await accountCollection.updateOne({ _id: res.insertedId }, {
             $set: {
                 token
             }
@@ -73,7 +73,7 @@ describe('Survey Routes', () => {
             expect(response.status).toBe(403)
         })
     })
-    test('should return 204  survey creation ', async () => {
+    test('should return 201 on survey creation ', async () => {
         const response = await request(app)
             .post('/survey')
             .set('x-access-token', token)
@@ -87,6 +87,6 @@ describe('Survey Routes', () => {
 
             })
 
-        expect(response.status).toBe(403)
+        expect(response.status).toBe(204)
     })
 })
