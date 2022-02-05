@@ -52,7 +52,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     })
   }
 
-  async loadByToken(token: string, role?: string | undefined): Promise<Account | null> {
+  async loadByToken(token: string): Promise<Account | null> {
 
 
     const accountCollection = await MongoHelper.getCollection('accounts')

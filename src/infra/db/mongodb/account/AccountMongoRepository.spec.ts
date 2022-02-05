@@ -79,7 +79,7 @@ describe('Account Mongo Repository', () => {
 
     expect(account?.token).toBe('anyToken')
   })
-  test('should return an account on loadByToken succsses whitout role', async () => {
+  test('should return an account on loadByToken succsses ', async () => {
     const sut = makeSut()
 
     const account = await sut.loadByToken('anyToken')
@@ -91,30 +91,8 @@ describe('Account Mongo Repository', () => {
     expect(account?.password).toBe('anyPassword')
 
   })
-  test('should return an account on loadByToken succsses whit role', async () => {
-    const sut = makeSut()
 
-    const account = await sut.loadByToken('anyToken', 'anyRole')
 
-    expect(account).toBeTruthy()
-    expect(account?.id).toBeTruthy()
-    expect(account?.name).toBe('anyName')
-    expect(account?.email).toBe('anyMail@mail.com')
-    expect(account?.password).toBe('anyPassword')
-
-  })
-  test('should return an account on loadByToken succsses whit role', async () => {
-    const sut = makeSut()
-
-    const account = await sut.loadByToken('anyToken', 'anyRole')
-
-    expect(account).toBeTruthy()
-    expect(account?.id).toBeTruthy()
-    expect(account?.name).toBe('anyName')
-    expect(account?.email).toBe('anyMail@mail.com')
-    expect(account?.password).toBe('anyPassword')
-
-  })
   test('should return null on loadByToken fails', async () => {
     const sut = makeSut()
 

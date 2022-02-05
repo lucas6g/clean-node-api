@@ -9,11 +9,11 @@ import { Middleware } from "../protocols/Middleware";
 export class AuthMiddleware implements Middleware {
 
     private readonly loadAccountByToken: LoadAccountByToken
-    private readonly role?: string
 
-    constructor(loadAccountByToken: LoadAccountByToken, role?: string) {
+
+    constructor(loadAccountByToken: LoadAccountByToken) {
         this.loadAccountByToken = loadAccountByToken
-        this.role = role
+
     }
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -25,7 +25,7 @@ export class AuthMiddleware implements Middleware {
 
             if (token) {
 
-                const account = await this.loadAccountByToken.getByToken(token, this.role)
+                const account = await this.loadAccountByToken.getByToken(token)
 
 
                 if (account) {

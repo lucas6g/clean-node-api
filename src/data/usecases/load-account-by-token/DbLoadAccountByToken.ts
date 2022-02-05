@@ -14,14 +14,14 @@ export class DbLoadAccountByToken implements LoadAccountByToken {
         this.tokenVerifier = tokenVerifier
     }
 
-    async getByToken(token: string, role?: string): Promise<Account | null> {
+    async getByToken(token: string): Promise<Account | null> {
 
         const verifiedToken = await this.tokenVerifier.verify(token)
 
         if (!verifiedToken) {
             return null
         }
-        const account = await this.loadAccountByTokenRepository.loadByToken(token, role)
+        const account = await this.loadAccountByTokenRepository.loadByToken(token)
 
         if (!account) {
             return null

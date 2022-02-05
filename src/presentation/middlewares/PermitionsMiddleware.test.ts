@@ -59,9 +59,9 @@ describe('PermitionsMiddleware', () => {
 
 
         await sut.handle({
-            body: {
-                accountId: 'anyAccountId'
-            }
+
+            accountId: 'anyAccountId'
+
         })
 
         expect(verifySpy).toHaveBeenCalledWith('anyAccountId', 'anyRole')
@@ -77,9 +77,9 @@ describe('PermitionsMiddleware', () => {
 
 
         const httpResponse = await sut.handle({
-            body: {
-                accountId: 'anyAccountId'
-            }
+
+            accountId: 'anyAccountId'
+
         })
 
         expect(httpResponse.statusCode).toBe(403)
@@ -92,9 +92,9 @@ describe('PermitionsMiddleware', () => {
         const { sut } = makeSut('anyRole')
 
         const httpResponse = await sut.handle({
-            body: {
-                accountId: 'anyAccountId'
-            }
+
+            accountId: 'anyAccountId'
+
         })
 
         expect(httpResponse.statusCode).toBe(200)
@@ -115,9 +115,7 @@ describe('PermitionsMiddleware', () => {
         })
 
         const httpResponse = await sut.handle({
-            body: {
-                accountId: 'anyAccountId'
-            }
+            accountId: 'anyAccountId'
         })
 
         expect(httpResponse.statusCode).toBe(500)
