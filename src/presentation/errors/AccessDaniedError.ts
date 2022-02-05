@@ -1,6 +1,6 @@
 export class AccessDaniedError extends Error {
   constructor() {
-    super(`Access Danied`)
+    super('Access Danied')
     this.name = 'AccessDaniedError'
   }
 }

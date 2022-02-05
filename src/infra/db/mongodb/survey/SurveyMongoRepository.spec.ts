@@ -3,10 +3,8 @@ import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './SurveyMongoRepository'
 
-
 describe('Survey Mongo Repository', () => {
     let surveyCollection: Collection
-
 
     beforeAll(async () => {
         await MongoHelper.connect(String(process.env.MONGO_URL))
@@ -19,7 +17,6 @@ describe('Survey Mongo Repository', () => {
         surveyCollection = await MongoHelper.getCollection('surveys')
     })
 
-
     afterEach(async () => {
         surveyCollection = await MongoHelper.getCollection('surveys')
         await surveyCollection.deleteMany({})
@@ -31,7 +28,6 @@ describe('Survey Mongo Repository', () => {
 
     test('should save an survey on success', async () => {
         const sut = makeSut()
-
 
         await sut.save({
 
@@ -48,8 +44,5 @@ describe('Survey Mongo Repository', () => {
         })
 
         expect(survey).toBeTruthy()
-
-
     })
-
 })

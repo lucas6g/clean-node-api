@@ -8,15 +8,10 @@ import { HttpRequest } from '../../../protocols/HttpRequest'
 import { HttpResponse } from '../../../protocols/HttpResponse'
 import { Validation } from '../../../protocols/Validation'
 
-
-
-
-
 export class SignupController implements Controller {
   private readonly addAccount: AddAccount
   private readonly validation: Validation
   private readonly authentication: Authentication
-
 
   constructor(addAccount: AddAccount, validation: Validation, authentication: Authentication) {
     this.addAccount = addAccount
@@ -44,10 +39,8 @@ export class SignupController implements Controller {
       }
       const token = await this.authentication.auth(account.email, account.password)
 
-
       return created({ token })
     } catch (error) {
-
       return serverError(error)
     }
   }

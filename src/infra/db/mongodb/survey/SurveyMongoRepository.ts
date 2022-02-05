@@ -6,11 +6,6 @@ export class SurveyMongoRepository implements SaveSurveyRepository {
     async save(surveyData: CreateSurveyModel): Promise<void> {
         const surveyCollection = await MongoHelper.getCollection('surveys')
 
-
         await surveyCollection.insertOne(surveyData)
-
-
     }
-
-
 }

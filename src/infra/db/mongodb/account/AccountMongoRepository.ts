@@ -53,8 +53,6 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
   }
 
   async loadByToken(token: string): Promise<Account | null> {
-
-
     const accountCollection = await MongoHelper.getCollection('accounts')
 
     const result = await accountCollection.findOne<WithId<Account>>({ token })
@@ -71,7 +69,6 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     }
 
     return account
-
   }
 
   async loadById(accountId: string): Promise<Account | null> {
@@ -93,9 +90,4 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
 
     return account
   }
-
-
-
-
-
 }

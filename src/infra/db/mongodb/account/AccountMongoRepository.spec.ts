@@ -89,9 +89,7 @@ describe('Account Mongo Repository', () => {
     expect(account?.name).toBe('anyName')
     expect(account?.email).toBe('anyMail@mail.com')
     expect(account?.password).toBe('anyPassword')
-
   })
-
 
   test('should return null on loadByToken fails', async () => {
     const sut = makeSut()
@@ -100,7 +98,6 @@ describe('Account Mongo Repository', () => {
 
     expect(account).toBeNull()
   })
-
 
   test('should return an account on loadById succses', async () => {
     const sut = makeSut()
@@ -122,5 +119,4 @@ describe('Account Mongo Repository', () => {
 
     expect(account).toBeNull()
   })
-
 })

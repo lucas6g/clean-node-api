@@ -2,8 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 
 import { Middleware } from '../../../presentation/protocols/Middleware'
 
-
-//disign partener proxy
+// disign partener proxy
 export const adpteMiddleware = (middleware: Middleware) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const httpRequest = {
@@ -15,7 +14,6 @@ export const adpteMiddleware = (middleware: Middleware) => {
     const httpResponse = await middleware.handle(httpRequest)
 
     if (httpResponse.statusCode === 200) {
-
       Object.assign(req, httpResponse.body)
       next()
     } else {

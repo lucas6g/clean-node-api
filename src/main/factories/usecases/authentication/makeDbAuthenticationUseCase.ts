@@ -16,6 +16,4 @@ export const makeDbAuthenticationUseCase = (): Authentication => {
     const jwtAdpter = new JwtAdpter(env.jwtSecret)
 
     return new DbAuthentication(accountMongoRepository, bcryptAdpter, jwtAdpter, accountMongoRepository)
-
-
 }

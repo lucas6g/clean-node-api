@@ -1,7 +1,4 @@
 
-
-
-
 import { SignupController } from '../../../../presentation/controllers/login/SignupController/SignupController'
 import { Controller } from '../../../../presentation/protocols/Controller'
 
@@ -12,9 +9,6 @@ import { makeSignupValidation } from './makeSignupValidation'
 
 // padra de projeto factory
 export const makeSignupController = (): Controller => {
-
-
-
   const signUpController = new SignupController(makeDbAddAccountUseCase(), makeSignupValidation(), makeDbAuthenticationUseCase())
 
   return makeLogControllerDecorator(signUpController)

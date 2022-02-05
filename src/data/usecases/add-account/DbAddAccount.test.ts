@@ -28,7 +28,6 @@ const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   // dependencia mockada
   class LoadAccoutRepositoryStub implements LoadAccountByEmailRepository {
     async getByEmail(email: string): Promise<Account | null> {
-
       return await Promise.resolve(null)
     }
   }
@@ -70,7 +69,6 @@ const makeSut = (): SutTypes => {
     hasherStub,
     addAccountRepositoryStub,
     loadAccountRepositoryStub
-
 
   }
 }
@@ -165,7 +163,6 @@ describe('DbAddAccount', () => {
       sut.add(accountData)
     ).rejects.toBeInstanceOf(Error)
   })
-
 
   test('should return an account  on success ', async () => {
     const { sut } = makeSut()

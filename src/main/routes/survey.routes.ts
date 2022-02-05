@@ -6,17 +6,8 @@ import { makeAuthMiddleware } from '../factories/middlewares/makeAuthMiddleware'
 import { makePermitionsMiddleware } from '../factories/middlewares/makePermitionsMiddleware'
 
 export default function loginRoutes(router: Router): Router {
-
-
     router
         .post('/survey', adpteMiddleware(makeAuthMiddleware()), adpteMiddleware(makePermitionsMiddleware('admin')), adpteRoute(makeCreateSurveyController()))
 
     return router
 }
-
-
-
-
-
-
-

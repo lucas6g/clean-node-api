@@ -10,8 +10,6 @@ export interface SurveyAnswer {
 
 }
 
-
-
 export interface CreateSurvey {
     create: (survey: CreateSurveyModel) => Promise<void>
 }

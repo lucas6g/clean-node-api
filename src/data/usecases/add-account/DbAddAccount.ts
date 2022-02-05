@@ -10,7 +10,6 @@ export class DbAddAccount implements AddAccount {
   private readonly addAccountRepository: AddAccountRepository
   private readonly loadAccountByEmailRespository: LoadAccountByEmailRepository
 
-
   constructor(
     hasher: Hasher,
     addAccountRepository: AddAccountRepository,
@@ -28,7 +27,6 @@ export class DbAddAccount implements AddAccount {
       return null
     }
     const hasherPassword = await this.hasher.hash(accountData.password)
-
 
     const account = await this.addAccountRepository.save(Object.assign({}, accountData, { password: hasherPassword }))
 

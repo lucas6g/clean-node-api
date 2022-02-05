@@ -7,10 +7,3 @@ export default function loginRoutes(router: Router): Router {
   router.post('/login', adpteRoute(makeLoginController()))
   return router
 }
-
-
-
-
-
-
-

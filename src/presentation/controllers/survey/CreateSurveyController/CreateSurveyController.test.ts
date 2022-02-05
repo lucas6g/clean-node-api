@@ -1,8 +1,7 @@
-import { HttpRequest } from "../../../protocols/HttpRequest"
-import { Validation } from "../../../protocols/Validation"
+import { HttpRequest } from '../../../protocols/HttpRequest'
+import { Validation } from '../../../protocols/Validation'
 import { CreateSurveyController } from './CreateSurveyController'
 import { CreateSurvey, CreateSurveyModel } from '../../../../domain/usecases/CreateSurvey'
-
 
 const makeFakeHttpRequest = (): HttpRequest => {
     return {
@@ -25,10 +24,10 @@ const makeValidationStub = (): Validation => {
     return new ValidationStub()
 }
 
-const makeSurveyStub = () => {
+const makeSurveyStub = (): CreateSurvey => {
     class CreateSurveyStub implements CreateSurvey {
         async create(survey: CreateSurveyModel): Promise<void> {
-            return Promise.resolve()
+            return await Promise.resolve()
         }
     }
     return new CreateSurveyStub()
@@ -41,7 +40,6 @@ interface SutTypes {
 
 }
 const makeSut = (): SutTypes => {
-
     const validationStub = makeValidationStub()
     const createSurveyStub = makeSurveyStub()
 
@@ -54,10 +52,6 @@ const makeSut = (): SutTypes => {
 
     }
 }
-
-
-
-
 
 describe('CreateSurvey Controller', () => {
     test('should  call Validation whit correct values', async () => {
@@ -80,8 +74,6 @@ describe('CreateSurvey Controller', () => {
 
         const httpResponse = await sut.handle(httpRequest)
 
-
-
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.body).toEqual(new Error())
     })
@@ -94,8 +86,6 @@ describe('CreateSurvey Controller', () => {
 
         await sut.handle(httpRequest)
 
-
-
         expect(createSurveySpy).toHaveBeenCalledWith({
             question: 'anyQuestion',
             answers: [{
@@ -103,7 +93,6 @@ describe('CreateSurvey Controller', () => {
                 answer: 'anyAnswer'
             }]
         })
-
     })
     test('should return 500 if  CreateSurvey trows error ', async () => {
         const { sut, createSurveyStub } = makeSut()
@@ -116,10 +105,6 @@ describe('CreateSurvey Controller', () => {
 
         expect(httpResponse.statusCode).toBe(500)
         expect(httpResponse.body).toBeInstanceOf(Error)
-
-
-
-
     })
     test('should return 500 if  CreateSurvey trows error ', async () => {
         const { sut, createSurveyStub } = makeSut()
@@ -132,25 +117,14 @@ describe('CreateSurvey Controller', () => {
 
         expect(httpResponse.statusCode).toBe(500)
         expect(httpResponse.body).toBeInstanceOf(Error)
-
-
-
-
     })
     test('should return 204 on success', async () => {
         const { sut } = makeSut()
 
         const httpRequest = makeFakeHttpRequest()
 
-
         const httpResponse = await sut.handle(httpRequest)
 
         expect(httpResponse.statusCode).toBe(204)
-
-
-
-
-
     })
-
 })

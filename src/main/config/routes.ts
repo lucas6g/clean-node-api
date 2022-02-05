@@ -7,5 +7,4 @@ export default function (app: Express): void {
   const router = Router()
   app.use(loginRoutes(router))
   app.use(surveyRoutes(router))
-
 }

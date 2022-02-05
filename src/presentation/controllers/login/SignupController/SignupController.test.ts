@@ -1,5 +1,4 @@
 
-
 import { Account } from '../../../../domain/entities/Account'
 import { AddAccount, AddAccountModel } from '../../../../domain/usecases/AddAccount'
 import { Authentication } from '../../../../domain/usecases/Authentication'

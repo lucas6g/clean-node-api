@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import { EmailValidator } from '../../../../validation/protocols/EmailValidator'
 import { EmailValidation } from '../../../../validation/validators/EmailValidation'
 import { RequeiredFieldValidation } from '../../../../validation/validators/RequiredFieldValidation'

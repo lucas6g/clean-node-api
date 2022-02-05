@@ -1,7 +1,6 @@
-import { CreateSurvey, CreateSurveyModel } from "../../../domain/usecases/CreateSurvey"
-import { SaveSurveyRepository } from "../../protocols/db/survey/SaveSurveyRepository"
+import { CreateSurvey, CreateSurveyModel } from '../../../domain/usecases/CreateSurvey'
+import { SaveSurveyRepository } from '../../protocols/db/survey/SaveSurveyRepository'
 import { DbCreateSurvey } from './DbCreateSurvey'
-
 
 const makeFakeSurvey = (): CreateSurveyModel => {
     return {
@@ -14,7 +13,7 @@ const makeFakeSurvey = (): CreateSurveyModel => {
 
     }
 }
-const makeSaveSurveyRepositoryStub = () => {
+const makeSaveSurveyRepositoryStub = (): SaveSurveyRepository => {
     class SaveSurveyRepositoryStub implements SaveSurveyRepository {
         async save(survey: CreateSurveyModel): Promise<void> {
             return await Promise.resolve()
@@ -27,12 +26,9 @@ interface SutTypes {
     sut: CreateSurvey
     saveSurveyRepositoryStub: SaveSurveyRepository
 
-
 }
 const makeSut = (): SutTypes => {
-
     const saveSurveyRepositoryStub = makeSaveSurveyRepositoryStub()
-
 
     const sut = new DbCreateSurvey(saveSurveyRepositoryStub)
 
@@ -44,10 +40,8 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbCreateSurvey', () => {
-
     test('should call SaveSurveyRepository whit correct values', async () => {
         const { sut, saveSurveyRepositoryStub } = makeSut()
-
 
         const fakeSurvey = makeFakeSurvey()
 
@@ -55,23 +49,15 @@ describe('DbCreateSurvey', () => {
 
         await sut.create(fakeSurvey)
 
-
         expect(saveSpy).toHaveBeenCalledWith(fakeSurvey)
-
-
     })
     test('should trows error if  SaveSurveyRepository trows', async () => {
         const { sut, saveSurveyRepositoryStub } = makeSut()
-
 
         const fakeSurvey = makeFakeSurvey()
 
         jest.spyOn(saveSurveyRepositoryStub, 'save').mockReturnValueOnce(Promise.reject(new Error()))
 
         await expect(sut.create(fakeSurvey)).rejects.toBeInstanceOf(Error)
-
-
     })
-
-
 })
