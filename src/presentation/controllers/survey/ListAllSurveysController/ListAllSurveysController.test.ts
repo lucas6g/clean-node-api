@@ -45,7 +45,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('ListAllSurveysController', () => {
-    test('should call ListAllSurveys whit correct values', async () => {
+    test('should call ListAllSurveys correcly', async () => {
         const { listAllSurveysStub, sut } = makeSut()
 
         const listAllSpy = jest.spyOn(listAllSurveysStub, 'listAll')
