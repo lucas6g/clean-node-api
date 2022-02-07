@@ -16,7 +16,7 @@ const makeListAllSurveysStub = (): ListAllSurveys => {
                         image: 'anyImage',
                         answer: 'anyAnswer'
                     }],
-                    date: new Date(),
+                    date: new Date(2022, 1, 7, 14),
                     didAnswer: true
 
                 }
@@ -67,13 +67,22 @@ describe('ListAllSurveysController', () => {
                     image: 'anyImage',
                     answer: 'anyAnswer'
                 }],
-                date: new Date(),
+                date: new Date(2022, 1, 7, 14),
                 didAnswer: true
 
             }
         ])
 
         expect(httpResponse.statusCode).toBe(200)
+    })
+    test('should returns 204 if ListAllSurveys returns no surveys', async () => {
+        const { sut, listAllSurveysStub } = makeSut()
+
+        jest.spyOn(listAllSurveysStub, 'listAll').mockReturnValueOnce(Promise.resolve([]))
+        const httpResponse = await sut.handle({})
+
+        expect(httpResponse.statusCode).toBe(204)
+        expect(httpResponse.body).toBeNull()
     })
     test('should returns 500 if ListAllSurveys trows error', async () => {
         const { sut, listAllSurveysStub } = makeSut()
