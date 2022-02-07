@@ -54,4 +54,25 @@ describe('ListAllSurveysController', () => {
 
         expect(listAllSpy).toHaveBeenCalled()
     })
+    test('should returns 200 on success', async () => {
+        const { sut } = makeSut()
+
+        const httpResponse = await sut.handle({})
+
+        expect(httpResponse.body).toEqual([
+            {
+                id: 'anyId',
+                question: 'anyQuestion',
+                answers: [{
+                    image: 'anyImage',
+                    answer: 'anyAnswer'
+                }],
+                date: new Date(),
+                didAnswer: true
+
+            }
+        ])
+
+        expect(httpResponse.statusCode).toBe(200)
+    })
 })
