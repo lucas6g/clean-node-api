@@ -11,6 +11,7 @@ const makeFakeHttpRequest = (): HttpRequest => {
                 image: 'anyImage',
                 answer: 'anyAnswer'
             }]
+
         }
     }
 }
@@ -84,6 +85,11 @@ describe('CreateSurvey Controller', () => {
 
         const createSurveySpy = jest.spyOn(createSurveyStub, 'create')
 
+        jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+            // quando invocar a funcao now retornar essa data
+            return new Date(2022, 1, 7, 14).getTime()
+        })
+
         await sut.handle(httpRequest)
 
         expect(createSurveySpy).toHaveBeenCalledWith({
@@ -91,7 +97,8 @@ describe('CreateSurvey Controller', () => {
             answers: [{
                 image: 'anyImage',
                 answer: 'anyAnswer'
-            }]
+            }],
+            date: new Date(2022, 1, 7, 14)
         })
     })
     test('should return 500 if  CreateSurvey trows error ', async () => {

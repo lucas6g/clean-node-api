@@ -25,7 +25,9 @@ export class CreateSurveyController implements Controller {
 
             await this.createSurvey.create({
                 question,
-                answers
+                answers,
+                date: new Date(Date.now())
+
             })
             return noContent()
         } catch (error) {
