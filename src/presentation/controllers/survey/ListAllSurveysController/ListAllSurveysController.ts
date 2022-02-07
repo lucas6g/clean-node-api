@@ -1,5 +1,6 @@
 
 import { ListAllSurveys } from '../../../../domain/usecases/ListAllSurveys'
+import { ok } from '../../../helpers/http/httpHelper'
 import { Controller } from '../../../protocols/Controller'
 import { HttpRequest } from '../../../protocols/HttpRequest'
 import { HttpResponse } from '../../../protocols/HttpResponse'
@@ -12,11 +13,8 @@ export class ListAllSurveysController implements Controller {
     }
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
-        await this.listAllSurvey.listAll()
+        const surveys = await this.listAllSurvey.listAll()
 
-        return await Promise.resolve({
-            body: '',
-            statusCode: 200
-        })
+        return ok(surveys)
     }
 }
