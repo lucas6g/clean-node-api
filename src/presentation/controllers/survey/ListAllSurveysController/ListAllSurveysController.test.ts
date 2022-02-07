@@ -75,4 +75,14 @@ describe('ListAllSurveysController', () => {
 
         expect(httpResponse.statusCode).toBe(200)
     })
+    test('should returns 500 if ListAllSurveys trows error', async () => {
+        const { sut, listAllSurveysStub } = makeSut()
+
+        jest.spyOn(listAllSurveysStub, 'listAll').mockReturnValueOnce(Promise.reject(new Error()))
+
+        const httpResponse = await sut.handle({})
+
+        expect(httpResponse.statusCode).toBe(500)
+        expect(httpResponse.body).toBeInstanceOf(Error)
+    })
 })
