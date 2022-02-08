@@ -64,4 +64,11 @@ describe('Survey Mongo Repository', () => {
         expect(surveys.length).toBe(1)
         expect(surveys[0].question).toBe('anyQuestion')
     })
+    test('should returns an  enpty list of surveys ', async () => {
+        const sut = makeSut()
+
+        const surveys = await sut.loadAll()
+
+        expect(surveys.length).toBe(0)
+    })
 })
