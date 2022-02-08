@@ -52,4 +52,11 @@ describe('DbListAllSurveys', () => {
 
         expect(loadAllSpy).toHaveBeenCalled()
     })
+    test('should trows error if LoadAllSurveysRepository trows error', async () => {
+        const { sut, loadAllSurveysRepositoryStub } = makeSut()
+
+        jest.spyOn(loadAllSurveysRepositoryStub, 'loadAll').mockReturnValueOnce(Promise.reject(new Error()))
+
+        await expect(sut.listAll()).rejects.toBeInstanceOf(Error)
+    })
 })
