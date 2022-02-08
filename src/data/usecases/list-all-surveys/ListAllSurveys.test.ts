@@ -59,4 +59,23 @@ describe('DbListAllSurveys', () => {
 
         await expect(sut.listAll()).rejects.toBeInstanceOf(Error)
     })
+    test('should returns a list of surveys', async () => {
+        const { sut } = makeSut()
+
+        const surveys = await sut.listAll()
+
+        expect(surveys).toEqual([
+            {
+                id: 'anyId',
+                question: 'anyQuestion',
+                answers: [{
+                    image: 'anyImage',
+                    answer: 'anyAnswer'
+                }],
+                date: new Date(2022, 1, 7, 14),
+                didAnswer: true
+
+            }
+        ])
+    })
 })
