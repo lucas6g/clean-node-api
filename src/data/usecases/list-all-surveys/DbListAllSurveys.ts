@@ -10,8 +10,8 @@ export class DbListAllSurveys implements ListAllSurveys {
     }
 
     async listAll(): Promise<Survey[]> {
-        await this.loadAllSurveysRepository.loadAll()
+        const surveys = await this.loadAllSurveysRepository.loadAll()
 
-        return []
+        return surveys
     }
 }
