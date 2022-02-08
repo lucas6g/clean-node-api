@@ -46,4 +46,22 @@ describe('Survey Mongo Repository', () => {
 
         expect(survey).toBeTruthy()
     })
+    test('should returns  an list of surveys on succsess', async () => {
+        const sut = makeSut()
+
+        await surveyCollection.insertOne({
+
+            question: 'anyQuestion',
+            answers: [{
+                image: 'anyImage',
+                answer: 'anyAnswer'
+            }],
+            date: new Date(2022, 1, 7, 14)
+
+        })
+        const surveys = await sut.loadAll()
+
+        expect(surveys.length).toBe(1)
+        expect(surveys[0].question).toBe('anyQuestion')
+    })
 })
