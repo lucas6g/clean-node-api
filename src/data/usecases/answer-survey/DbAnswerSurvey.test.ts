@@ -36,7 +36,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAnswerSurvey', () => {
-    test('should call LoadSurveyById whit correct id', async () => {
+    test('should call LoadSurveyByIdRepository whit correct id', async () => {
         const { loadSurveyByIdRepositoryStub, sut } = makeSut()
 
         const loadByIdSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
@@ -50,7 +50,7 @@ describe('DbAnswerSurvey', () => {
 
         expect(loadByIdSpy).toHaveBeenCalledWith('anySurveyId')
     })
-    test('should returns null if LoadSurveyById returns null', async () => {
+    test('should returns null if LoadSurveyByIdRespository returns null', async () => {
         const { loadSurveyByIdRepositoryStub, sut } = makeSut()
 
         jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
@@ -63,5 +63,21 @@ describe('DbAnswerSurvey', () => {
         })
 
         expect(surveyResult).toBeNull()
+    })
+    test('should trows error if  LoadSurveyByIdRepository trows error', async () => {
+        const { loadSurveyByIdRepositoryStub, sut } = makeSut()
+
+        jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        await expect(
+            sut.respond({
+                surveyId: 'anySurveyId',
+                accountId: 'anyAccountId',
+                answer: 'anyAnswer',
+                date: new Date()
+            })
+        ).rejects.toBeInstanceOf(Error)
     })
 })
