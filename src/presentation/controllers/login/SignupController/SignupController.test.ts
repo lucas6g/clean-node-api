@@ -152,7 +152,7 @@ describe('Signup Controller', () => {
 
     await sut.handle(httpRequest)
 
-    expect(authSpy).toHaveBeenCalledWith('validEmail@mail.com', 'validPassword')
+    expect(authSpy).toHaveBeenCalledWith('validEmail@mail.com', 'anyPassword')
   })
   test('should return 500 Authentication trows error', async () => {
     const { sut, authenticationStub } = makeSut()
