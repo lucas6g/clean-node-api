@@ -65,21 +65,28 @@ describe('Survey Routes', () => {
 
             expect(response.status).toBe(403)
         })
+        test('should return 201 on survey creation ', async () => {
+            const response = await request(app)
+                .post('/survey')
+                .set('x-access-token', token)
+                .send({
+
+                    question: 'anyQuestion',
+                    answers: [{
+                        image: 'https://avatars.githubusercontent.com/u/54814274?v=4',
+                        answer: 'anyAnswer'
+                    }]
+
+                })
+
+            expect(response.status).toBe(204)
+        })
     })
-    test('should return 201 on survey creation ', async () => {
-        const response = await request(app)
-            .post('/survey')
-            .set('x-access-token', token)
-            .send({
+    describe('GET /survey', () => {
+        test('should return 403  on survey  whitout access token', async () => {
+            const response = await request(app).get('/survey')
 
-                question: 'anyQuestion',
-                answers: [{
-                    image: 'https://avatars.githubusercontent.com/u/54814274?v=4',
-                    answer: 'anyAnswer'
-                }]
-
-            })
-
-        expect(response.status).toBe(204)
+            expect(response.status).toBe(403)
+        })
     })
 })
