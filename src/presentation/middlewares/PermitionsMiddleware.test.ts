@@ -15,7 +15,7 @@ const makeVerifyPermitionStub = (): VerifyPermition => {
     return new VerifyPermitionStub()
 }
 
-interface SutTypes {
+type SutTypes = {
     sut: Middleware
     verifyPermitionStub: VerifyPermition
 

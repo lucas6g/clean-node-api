@@ -1,7 +1,7 @@
 import { Account } from '../entities/Account'
 
 // dto
-export interface AddAccountModel {
+export type AddAccountModel = {
   name: string
   email: string
   password: string
