@@ -9,7 +9,10 @@ export class DbAnswerSurvey implements AnswerSurvey {
     }
 
     async respond(data: AnswerSurveyModel): Promise<SurveyResult | null> {
-        await this.loadSurveyByIdRepository.loadById(data.surveyId)
+        const surveyResult = await this.loadSurveyByIdRepository.loadById(data.surveyId)
+        if (!surveyResult) {
+            return null
+        }
 
         return await Promise.resolve({
             accountId: '',
