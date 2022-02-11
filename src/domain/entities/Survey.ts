@@ -1,4 +1,4 @@
-export interface Survey {
+export type Survey = {
     id: string
     question: string
     answers: SurveyAnswer[]
@@ -6,7 +6,7 @@ export interface Survey {
     didAnswer?: boolean
 }
 
-interface SurveyAnswer {
+type SurveyAnswer = {
     image?: string
     answer: string
 }

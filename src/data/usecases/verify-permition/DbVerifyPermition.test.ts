@@ -19,7 +19,7 @@ const makeLoadAccountByIdRepositoryStub = (): LoadAccountByIdRepository => {
     }
     return new LoadAccountByIdRepositoryStub()
 }
-interface SutTypes {
+type SutTypes = {
     sut: VerifyPermition
     loadAccountByIdRepositoryStub: LoadAccountByIdRepository
 

@@ -29,7 +29,7 @@ const makeTokenVerifierStub = (): TokenVerifier => {
     }
     return new TokenVerifierStub()
 }
-interface SutTypes {
+type SutTypes = {
     sut: LoadAccountByToken
     tokenVerifierStub: TokenVerifier
     loadAccountByTokenRepositoryStub: LoadAccountByTokenRepository

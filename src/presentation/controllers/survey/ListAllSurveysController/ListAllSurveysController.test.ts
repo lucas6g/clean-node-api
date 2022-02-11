@@ -28,7 +28,7 @@ const makeListAllSurveysStub = (): ListAllSurveys => {
     return new ListAllSurveysStub()
 }
 
-interface SutTypes {
+type SutTypes = {
     sut: ListAllSurveysController
     listAllSurveysStub: ListAllSurveys
 

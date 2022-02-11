@@ -25,7 +25,7 @@ const makeLoadAllSurveysRepositoryStub = (): LoadAllSurveysRepository => {
     return new LoadAllSurveysRepositoryStub()
 }
 
-interface SutTypes {
+type SutTypes = {
     sut: ListAllSurveys
     loadAllSurveysRepositoryStub: LoadAllSurveysRepository
 

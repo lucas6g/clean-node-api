@@ -23,7 +23,7 @@ const makeSaveSurveyRepositoryStub = (): SaveSurveyRepository => {
     return new SaveSurveyRepositoryStub()
 }
 
-interface SutTypes {
+type SutTypes = {
     sut: CreateSurvey
     saveSurveyRepositoryStub: SaveSurveyRepository
 

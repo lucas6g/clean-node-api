@@ -53,7 +53,7 @@ const makeTokenGeneratorStub = (): TokenGenerator => {
     return new TokenGeneratorStub()
 }
 
-interface SutTypes {
+type SutTypes = {
 
     sut: DbAuthentication
     loadAccountRepositoryStub: LoadAccountByEmailRepository
