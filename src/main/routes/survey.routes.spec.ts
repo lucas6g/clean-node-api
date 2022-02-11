@@ -25,18 +25,18 @@ describe('Survey Routes', () => {
         surveyCollection = await MongoHelper.getCollection('surveys')
         accountCollection = await MongoHelper.getCollection('accounts')
 
-        const res = await accountCollection.insertOne({
+        const insertedAccount = await accountCollection.insertOne({
             name: 'lucas',
             email: 'lucas@gmail.com',
             password: '12345',
             token: 'token',
             role: 'admin'
         })
-        const accountId = res.insertedId.toString()
+        const accountId = insertedAccount.insertedId.toString()
 
         token = sign({ accountId }, env.jwtSecret)
 
-        await accountCollection.updateOne({ _id: res.insertedId }, {
+        await accountCollection.updateOne({ _id: insertedAccount.insertedId }, {
             $set: {
                 token
             }
@@ -65,7 +65,7 @@ describe('Survey Routes', () => {
 
             expect(response.status).toBe(403)
         })
-        test('should return 201 on survey creation ', async () => {
+        test('should return 204 on survey creation ', async () => {
             const response = await request(app)
                 .post('/survey')
                 .set('x-access-token', token)
@@ -87,6 +87,31 @@ describe('Survey Routes', () => {
             const response = await request(app).get('/survey')
 
             expect(response.status).toBe(403)
+        })
+        test('should returns 204 if no survey is returned', async () => {
+            const response = await request(app)
+                .get('/survey')
+                .set('x-access-token', token)
+
+            expect(response.status).toBe(204)
+        })
+        test('should returns 200 on success', async () => {
+            await surveyCollection.insertOne({
+                id: 'anyId',
+                question: 'anyQuestion',
+                answers: [{
+                    image: 'anyImage',
+                    answer: 'anyAnswer'
+                }],
+                date: new Date(2022, 1, 7, 14),
+                didAnswer: true
+
+            })
+            const response = await request(app)
+                .get('/survey')
+                .set('x-access-token', token)
+
+            expect(response.status).toBe(200)
         })
     })
 })
