@@ -13,12 +13,12 @@ export class DbAnswerSurvey implements AnswerSurvey {
     }
 
     async respond(data: AnswerSurveyModel): Promise<SurveyResult | null> {
-        const surveyResult = await this.loadSurveyByIdRepository.loadById(data.surveyId)
-        if (!surveyResult) {
+        const survey = await this.loadSurveyByIdRepository.loadById(data.surveyId)
+        if (!survey) {
             return null
         }
 
-        const hasAnswer = surveyResult.answers.find((answer) => {
+        const hasAnswer = survey.answers.find((answer) => {
             return answer.answer === data.answer
         })
 
@@ -26,14 +26,8 @@ export class DbAnswerSurvey implements AnswerSurvey {
             return null
         }
 
-        await this.saveOrUpdateSurveyRespository.saveOrUpdate(data)
+        const surveyResult = await this.saveOrUpdateSurveyRespository.saveOrUpdate(data)
 
-        return await Promise.resolve({
-            accountId: '',
-            answer: '',
-            date: new Date(),
-            id: '',
-            surveyId: ''
-        })
+        return surveyResult
     }
 }
