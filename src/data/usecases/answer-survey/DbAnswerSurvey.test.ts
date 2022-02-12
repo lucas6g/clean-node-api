@@ -2,7 +2,9 @@
 import { DbAnswerSurvey } from './DbAnswerSurvey'
 import { LoadSurveyByIdRepository } from '../../protocols/db/survey/LoadSurveyByIdRepository'
 import { Survey } from '../../../domain/entities/Survey'
-import { AnswerSurvey } from '../../../domain/usecases/AnswerSurvey'
+import { AnswerSurvey, AnswerSurveyModel } from '../../../domain/usecases/AnswerSurvey'
+import { SurveyResult } from '../../../domain/entities/SurveyResult'
+import { SaveOrUpdateSurveyRespository } from '../../protocols/db/survey/SaveOrUpdateSurveyRespository'
 
 const makeLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
     class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
@@ -21,19 +23,36 @@ const makeLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
     }
     return new LoadSurveyByIdRepositoryStub()
 }
+const makeSaveOrUpdateSurveyResultRepositoryStub = (): SaveOrUpdateSurveyRespository => {
+    class SaveOrUpdateSurveyResultRepositoryStub implements SaveOrUpdateSurveyRespository {
+        async saveOrUpdate(data: AnswerSurveyModel): Promise<SurveyResult | null> {
+            return await Promise.resolve({
+                id: 'anyId',
+                surveyId: 'anySurveyId',
+                accountId: 'anyAccountId',
+                answer: 'anyAnswer',
+                date: new Date(2020, 4, 10, 12)
+            })
+        }
+    }
+    return new SaveOrUpdateSurveyResultRepositoryStub()
+}
 
 type SutTypes = {
     sut: AnswerSurvey
     loadSurveyByIdRepositoryStub: LoadSurveyByIdRepository
+    saveOrUpdateSurveyResultRepositoryStub: SaveOrUpdateSurveyRespository
 }
 
 const makeSut = (): SutTypes => {
+    const saveOrUpdateSurveyResultRepositoryStub = makeSaveOrUpdateSurveyResultRepositoryStub()
     const loadSurveyByIdRepositoryStub = makeLoadSurveyByIdRepositoryStub()
-    const sut = new DbAnswerSurvey(loadSurveyByIdRepositoryStub)
+    const sut = new DbAnswerSurvey(loadSurveyByIdRepositoryStub, saveOrUpdateSurveyResultRepositoryStub)
 
     return {
         sut,
-        loadSurveyByIdRepositoryStub
+        loadSurveyByIdRepositoryStub,
+        saveOrUpdateSurveyResultRepositoryStub
 
     }
 }
@@ -105,5 +124,24 @@ describe('DbAnswerSurvey', () => {
         })
 
         expect(surveyResult).toBeNull()
+    })
+    test('should calls SaveOrUpdateSurveyResultRepository whit correct values', async () => {
+        const { sut, saveOrUpdateSurveyResultRepositoryStub } = makeSut()
+
+        const saveOrUpdateSpy = jest.spyOn(saveOrUpdateSurveyResultRepositoryStub, 'saveOrUpdate')
+
+        await sut.respond({
+            surveyId: 'anySurveyId',
+            accountId: 'anyAccountId',
+            answer: 'anyAnswer',
+            date: new Date(2020, 4, 10, 12)
+        })
+
+        expect(saveOrUpdateSpy).toBeCalledWith({
+            surveyId: 'anySurveyId',
+            accountId: 'anyAccountId',
+            answer: 'anyAnswer',
+            date: new Date(2020, 4, 10, 12)
+        })
     })
 })
