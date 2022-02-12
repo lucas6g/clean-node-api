@@ -1,6 +1,6 @@
 
-import { SurveyResult } from '../../../../domain/entities/SurveyResult'
+import { Survey } from '../../../../domain/entities/Survey'
 
 export interface LoadSurveyByIdRepository {
-    loadById: (surverId: string) => Promise<SurveyResult | null>
+    loadById: (surverId: string) => Promise<Survey | null>
 }

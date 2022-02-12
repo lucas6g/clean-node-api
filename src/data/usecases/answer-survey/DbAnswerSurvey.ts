@@ -14,6 +14,14 @@ export class DbAnswerSurvey implements AnswerSurvey {
             return null
         }
 
+        const hasAnswer = surveyResult.answers.find((answer) => {
+            return answer.answer === data.answer
+        })
+
+        if (!hasAnswer) {
+            return null
+        }
+
         return await Promise.resolve({
             accountId: '',
             answer: '',
