@@ -144,4 +144,38 @@ describe('DbAnswerSurvey', () => {
             date: new Date(2020, 4, 10, 12)
         })
     })
+    test('should trows error if  SaveOrUpdateSurveyRespository trows error', async () => {
+        const { saveOrUpdateSurveyResultRepositoryStub, sut } = makeSut()
+
+        jest.spyOn(saveOrUpdateSurveyResultRepositoryStub, 'saveOrUpdate').mockImplementationOnce(() => {
+            throw new Error()
+        })
+
+        await expect(
+            sut.respond({
+                surveyId: 'anySurveyId',
+                accountId: 'anyAccountId',
+                answer: 'anyAnswer',
+                date: new Date()
+            })
+        ).rejects.toBeInstanceOf(Error)
+    })
+    test('should returns survey result on success', async () => {
+        const { sut } = makeSut()
+
+        const surveyResult = await sut.respond({
+            surveyId: 'anySurveyId',
+            accountId: 'anyAccountId',
+            answer: 'anyAnswer',
+            date: new Date(2020, 4, 10, 12)
+        })
+
+        expect(surveyResult).toEqual({
+            id: 'anyId',
+            surveyId: 'anySurveyId',
+            accountId: 'anyAccountId',
+            answer: 'anyAnswer',
+            date: new Date(2020, 4, 10, 12)
+        })
+    })
 })
