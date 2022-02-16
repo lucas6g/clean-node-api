@@ -15,15 +15,20 @@ describe('AnswerSurveyController', () => {
         const validationSpy = jest.spyOn(validationStub, 'validate')
 
         const httpRequest = {
+            params: {
+                surveyId: 'anySurveyId'
+            },
             body: {
-                surveyId: 'anySurveyId',
-                accountId: 'anyAccountId',
+
                 answer: 'anyAnswer'
 
-            }
+            },
+            accountId: 'anyAccountId'
+
         }
         await sut.handle(httpRequest)
 
         expect(validationSpy).toHaveBeenCalledWith(httpRequest.body)
+        expect(validationSpy).toHaveBeenCalledWith(httpRequest.params)
     })
 })

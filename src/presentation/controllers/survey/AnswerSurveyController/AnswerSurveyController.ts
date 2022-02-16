@@ -12,6 +12,7 @@ export class AnswerSurveyController implements Controller {
 
     async handle(request: HttpRequest): Promise<HttpResponse> {
         this.validation.validate(request.body)
+        this.validation.validate(request.params)
 
         return await Promise.resolve({
             body: null,
