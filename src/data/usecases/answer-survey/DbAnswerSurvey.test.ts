@@ -4,7 +4,7 @@ import { LoadSurveyByIdRepository } from '../../protocols/db/survey/LoadSurveyBy
 import { Survey } from '../../../domain/entities/Survey'
 import { AnswerSurvey, AnswerSurveyModel } from '../../../domain/usecases/AnswerSurvey'
 import { SurveyResult } from '../../../domain/entities/SurveyResult'
-import { SaveOrUpdateSurveyRespository } from '../../protocols/db/survey/SaveOrUpdateSurveyRespository'
+import { SaveOrUpdateSurveyResultRespository } from '../../protocols/db/survey/SaveOrUpdateSurveyResultRespository'
 
 const makeLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
     class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
@@ -23,8 +23,8 @@ const makeLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
     }
     return new LoadSurveyByIdRepositoryStub()
 }
-const makeSaveOrUpdateSurveyResultRepositoryStub = (): SaveOrUpdateSurveyRespository => {
-    class SaveOrUpdateSurveyResultRepositoryStub implements SaveOrUpdateSurveyRespository {
+const makeSaveOrUpdateSurveyResultRepositoryStub = (): SaveOrUpdateSurveyResultRespository => {
+    class SaveOrUpdateSurveyResultRepositoryStub implements SaveOrUpdateSurveyResultRespository {
         async saveOrUpdate(data: AnswerSurveyModel): Promise<SurveyResult | null> {
             return await Promise.resolve({
                 id: 'anyId',
@@ -41,7 +41,7 @@ const makeSaveOrUpdateSurveyResultRepositoryStub = (): SaveOrUpdateSurveyResposi
 type SutTypes = {
     sut: AnswerSurvey
     loadSurveyByIdRepositoryStub: LoadSurveyByIdRepository
-    saveOrUpdateSurveyResultRepositoryStub: SaveOrUpdateSurveyRespository
+    saveOrUpdateSurveyResultRepositoryStub: SaveOrUpdateSurveyResultRespository
 }
 
 const makeSut = (): SutTypes => {
@@ -144,7 +144,7 @@ describe('DbAnswerSurvey', () => {
             date: new Date(2020, 4, 10, 12)
         })
     })
-    test('should trows error if  SaveOrUpdateSurveyRespository trows error', async () => {
+    test('should trows error if  SaveOrUpdateSurveyResultRespository trows error', async () => {
         const { saveOrUpdateSurveyResultRepositoryStub, sut } = makeSut()
 
         jest.spyOn(saveOrUpdateSurveyResultRepositoryStub, 'saveOrUpdate').mockImplementationOnce(() => {

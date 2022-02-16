@@ -1,15 +1,15 @@
 import { SurveyResult } from '../../../domain/entities/SurveyResult'
 import { AnswerSurvey, AnswerSurveyModel } from '../../../domain/usecases/AnswerSurvey'
 import { LoadSurveyByIdRepository } from '../../protocols/db/survey/LoadSurveyByIdRepository'
-import { SaveOrUpdateSurveyRespository } from '../../protocols/db/survey/SaveOrUpdateSurveyRespository'
+import { SaveOrUpdateSurveyResultRespository } from '../../protocols/db/survey/SaveOrUpdateSurveyResultRespository'
 
 export class DbAnswerSurvey implements AnswerSurvey {
     private readonly loadSurveyByIdRepository: LoadSurveyByIdRepository
-    private readonly saveOrUpdateSurveyRespository: SaveOrUpdateSurveyRespository
+    private readonly saveOrUpdateSurveyResultRespository: SaveOrUpdateSurveyResultRespository
 
-    constructor(loadSurveyByIdRepository: LoadSurveyByIdRepository, saveOrUpdateSurveyRespository: SaveOrUpdateSurveyRespository) {
+    constructor(loadSurveyByIdRepository: LoadSurveyByIdRepository, saveOrUpdateSurveyResultRespository: SaveOrUpdateSurveyResultRespository) {
         this.loadSurveyByIdRepository = loadSurveyByIdRepository
-        this.saveOrUpdateSurveyRespository = saveOrUpdateSurveyRespository
+        this.saveOrUpdateSurveyResultRespository = saveOrUpdateSurveyResultRespository
     }
 
     async respond(data: AnswerSurveyModel): Promise<SurveyResult | null> {
@@ -26,7 +26,7 @@ export class DbAnswerSurvey implements AnswerSurvey {
             return null
         }
 
-        const surveyResult = await this.saveOrUpdateSurveyRespository.saveOrUpdate(data)
+        const surveyResult = await this.saveOrUpdateSurveyResultRespository.saveOrUpdate(data)
 
         return surveyResult
     }

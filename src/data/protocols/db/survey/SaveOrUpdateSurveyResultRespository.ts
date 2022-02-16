@@ -1,6 +1,6 @@
 import { SurveyResult } from '../../../../domain/entities/SurveyResult'
 import { AnswerSurveyModel } from '../../../../domain/usecases/AnswerSurvey'
 
-export interface SaveOrUpdateSurveyRespository {
+export interface SaveOrUpdateSurveyResultRespository {
     saveOrUpdate: (data: AnswerSurveyModel) => Promise<SurveyResult | null>
 }
